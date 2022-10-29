@@ -9,51 +9,47 @@ const addonInfo = {
 const Store = require('electron-store');
 const userPrefs = new Store();
 const addonSettingsUtils = require(require('path').resolve('./') + '/app/utils/addonUtils');
-const addonSetUtils = new addonSettingsUtils(addonInfo["id"]);
+const addonSetUtils = new addonSettingsUtils();
 
 class gatoAddon {
     // Fetch Function - DO NOT REMOVE
-    constructor(){
-
-    }
-    
-    getInfo(infoName) {
+    static getInfo(infoName) {
         return addonInfo[infoName];
     }
 
     // Create your inital configurations here
-    firstTimeSetup(){
+    static firstTimeSetup(){
         // REQUIRED
         addonSetUtils.addConfig("enabled", true);
         // Add your custom configuration options here
     }
 
     // Runs when page starts loading
-    initialize() {
-        
+    static initialize() {
+        console.log("Keybinds Running")
     }
     // Runs when page fully loaded
-    domLoaded() {
+    static domLoaded() {
 
     }
     // Runs when addon is disabled
-    deactivate(){
+    static deactivate(){
         
     }
 
     // Runs when settings update
-    updateSettings(){
+    static updateSettings(){
 
     }
 
     // Loads Addons Settings to Configuration Window
-    loadAddonSettings() {
-        addonSetUtils.createForm();
+    static loadAddonSettings() {
+        addonSetUtils.createForm(addonInfo["id"]);
 
         addonSetUtils.createCategory("addonSettings", "Addon Settings");
-        addonSetUtils.createCheckbox("enabled", "Enable Addon", "Determines if the Addon loads when refreshing page", "addonSettings", false);
+        addonSetUtils.createCheckbox(addonInfo["id"], "enabled", "Enable Addon", "Determines if the Addon loads when refreshing page", "addonSettings", false);
 
-        addonSetUtils.hookSaving();
+        addonSetUtils.hookSaving(addonInfo["id"]);
     }
 }
 module.exports = gatoAddon
