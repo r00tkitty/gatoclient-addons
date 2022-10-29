@@ -12,7 +12,7 @@
       },
       {
         "name": "Dummy",
-        "id": "keystrokeOverlay",
+        "id": "dummyAddon",
         "version": "1.0.0",
         "fileLink":"",
         "thumbnail": "https://media.discordapp.net/attachments/901905234861883432/965766624235896882/unknown.png",
