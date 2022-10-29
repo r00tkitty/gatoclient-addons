@@ -4,19 +4,10 @@
       {
         "name": "Keystrokes Overlay",
         "id": "keystrokeOverlay",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/keystrokesOverlay.js",
-        "thumbnail": "https://media.discordapp.net/attachments/901905234861883432/965766624235896882/unknown.png",
+        "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/keyboardoverlay.png?raw=true",
         "description": "Gatoclient Keyboard Overlay",
-        "isSocial": false
-      },
-      {
-        "name": "Dummy",
-        "id": "dummyAddon",
-        "version": "1.0.0",
-        "fileLink":"",
-        "thumbnail": "https://media.discordapp.net/attachments/901905234861883432/965766624235896882/unknown.png",
-        "description": "Among Us Sussy Haha",
         "isSocial": false
       }
     ]
