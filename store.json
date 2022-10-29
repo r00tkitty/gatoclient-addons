@@ -1,0 +1,24 @@
+{
+  "store": {
+    "addons": [
+      {
+        "name": "Keystrokes Overlay",
+        "id": "keystrokeOverlay",
+        "version": "1.0.0",
+        "fileLink":"",
+        "thumbnail": "https://media.discordapp.net/attachments/901905234861883432/965766624235896882/unknown.png",
+        "description": "Gatoclient Keyboard Overlay",
+        "isSocial": false
+      },
+      {
+        "name": "Dummy",
+        "id": "keystrokeOverlay",
+        "version": "1.0.0",
+        "fileLink":"",
+        "thumbnail": "https://media.discordapp.net/attachments/901905234861883432/965766624235896882/unknown.png",
+        "description": "Among Us Sussy Haha",
+        "isSocial": false
+      }
+    ]
+  }
+}
