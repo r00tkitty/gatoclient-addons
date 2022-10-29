@@ -5,7 +5,7 @@
         "name": "Keystrokes Overlay",
         "id": "keystrokeOverlay",
         "version": "1.0.0",
-        "fileLink":"",
+        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/keystrokesOverlay.js",
         "thumbnail": "https://media.discordapp.net/attachments/901905234861883432/965766624235896882/unknown.png",
         "description": "Gatoclient Keyboard Overlay",
         "isSocial": false
