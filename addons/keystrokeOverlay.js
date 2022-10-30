@@ -6,8 +6,6 @@ const addonInfo = {
     description: "Keyboard Overlay based off of the Crankshaft Keystrokes by KraXen72",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
-const Store = require('electron-store');
-const userPrefs = new Store();
 const addonSettingsUtils = require(require('path').resolve('./') + '/app/utils/addonUtils');
 const addonSetUtils = new addonSettingsUtils();
 
