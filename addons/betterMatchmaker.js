@@ -42,9 +42,6 @@ class gatoAddon {
 
             const gameModes = { ffa: 0, tdm: 1, point: 2, ctf: 3, kc: 19 };
 
-            let filePath = preferences;
-            let userPrefs = JSON.parse(fs.readFileSync(filePath));
-
             var resGL = await fetch(`https://matchmaker.krunker.io/game-list?hostname=${
                 window.location.hostname}`)
                 .then(_ => _.json());
