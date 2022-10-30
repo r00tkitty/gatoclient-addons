@@ -9,6 +9,15 @@
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/keyboardoverlay.png?raw=true",
         "description": "Keyboard Overlay based off of the Crankshaft Keystrokes by KraXen72",
         "isSocial": false
+      },
+      {
+        "name": "Better Matchmaker",
+        "id": "betterMatchmaker",
+        "version": "1.0.0",
+        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/betterMatchmaker.js",
+        "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/bettermatchmaker.png?raw=true",
+        "description": "Changes Matchmaking to Join Games with a specific gamemode",
+        "isSocial": false
       }
     ]
   }
