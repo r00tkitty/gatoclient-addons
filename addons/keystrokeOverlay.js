@@ -1,7 +1,7 @@
 const addonInfo = {
     name: "Keystrokes Overlay",  // Addon Name
     id: "keystrokeOverlay",     // Addon ID (Referenced by save data)
-    version: "1.0.0",        // Version
+    version: "1.0.1",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/keyboardoverlay.png?raw=true",           // Thumbnail URL
     description: "Keyboard Overlay based off of the Crankshaft Keystrokes by KraXen72",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
@@ -19,6 +19,10 @@ class gatoAddon {
         // REQUIRED
         addonSetUtils.addConfig(addonInfo["id"], "enabled", true);
         // Add your custom configuration options here
+        addonSetUtils.addConfig(addonInfo["id"], "forward", "W");
+        addonSetUtils.addConfig(addonInfo["id"], "backward", "S");
+        addonSetUtils.addConfig(addonInfo["id"], "left", "A");
+        addonSetUtils.addConfig(addonInfo["id"], "right", "D");
         addonSetUtils.addConfig(addonInfo["id"], "auxKey1", "R");
         addonSetUtils.addConfig(addonInfo["id"], "auxKey2", "G");
 
@@ -36,15 +40,19 @@ class gatoAddon {
     static domLoaded() {
         // here you can mess with the values
         const size = 2.5 //how many rem will one of the keys be in height
-        const auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1")
-        const auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2")
+        const forward = addonSetUtils.getConfig(addonInfo["id"], "forward").substring(0,1)
+        const backward = addonSetUtils.getConfig(addonInfo["id"], "backward").substring(0,1)
+        const left = addonSetUtils.getConfig(addonInfo["id"], "left").substring(0,1)
+        const right = addonSetUtils.getConfig(addonInfo["id"], "right").substring(0,1)
+        const auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1").substring(0,1)
+        const auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2").substring(0,1)
 
         //ok don't touch it past this point unless you know what you're doing
         const keysHTML = `
-    <span class="key key-w">W</span>
-    <span class="key key-a">A</span>
-    <span class="key key-s">S</span>
-    <span class="key key-d">D</span>
+    <span class="key key-w">${forward}</span>
+    <span class="key key-a">${left}</span>
+    <span class="key key-s">${backward}</span>
+    <span class="key key-d">${right}</span>
     <span class="key key-sft">sft</span>
     <span class="key key-space">__</span>
     <span class="key key-aux1">${auxKey1}</span>
@@ -114,10 +122,10 @@ class gatoAddon {
         document.getElementById("inGameUI").appendChild(hold)
 
         const keys = [
-            { keyCode: 87, elem: document.querySelector(".keystrokes-hold .key.key-w") },
-            { keyCode: 65, elem: document.querySelector(".keystrokes-hold .key.key-a") },
-            { keyCode: 83, elem: document.querySelector(".keystrokes-hold .key.key-s") },
-            { keyCode: 68, elem: document.querySelector(".keystrokes-hold .key.key-d") },
+            { keyCode: forward.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-w") },
+            { keyCode: left.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-a") },
+            { keyCode: backward.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-s") },
+            { keyCode: right.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-d") },
             { keyCode: 16, elem: document.querySelector(".keystrokes-hold .key.key-sft") },
             { keyCode: 32, elem: document.querySelector(".keystrokes-hold .key.key-space") },
             { keyCode: auxKey1.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-aux1") },
@@ -125,6 +133,10 @@ class gatoAddon {
         ]
 
         function handleKeyDown(event) {
+            keys[0]["keyCode"] = keys[0]["elem"].textContent.charCodeAt(0);
+            keys[1]["keyCode"] = keys[1]["elem"].textContent.charCodeAt(0);
+            keys[2]["keyCode"] = keys[2]["elem"].textContent.charCodeAt(0);
+            keys[3]["keyCode"] = keys[3]["elem"].textContent.charCodeAt(0);
             keys[6]["keyCode"] = keys[6]["elem"].textContent.charCodeAt(0);
             keys[7]["keyCode"] = keys[7]["elem"].textContent.charCodeAt(0);
             for (let i = 0; i < keys.length; i++) {
@@ -136,6 +148,10 @@ class gatoAddon {
         }
 
         function handleKeyUp(event) {
+            keys[0]["keyCode"] = keys[0]["elem"].textContent.charCodeAt(0);
+            keys[1]["keyCode"] = keys[1]["elem"].textContent.charCodeAt(0);
+            keys[2]["keyCode"] = keys[2]["elem"].textContent.charCodeAt(0);
+            keys[3]["keyCode"] = keys[3]["elem"].textContent.charCodeAt(0);
             keys[6]["keyCode"] = keys[6]["elem"].textContent.charCodeAt(0);
             keys[7]["keyCode"] = keys[7]["elem"].textContent.charCodeAt(0);
             for (let i = 0; i < keys.length; i++) {
@@ -152,18 +168,26 @@ class gatoAddon {
 
     // Runs when settings update
     static updateSettings() {
-        var auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1")
-        var auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2")
+        const forward = addonSetUtils.getConfig(addonInfo["id"], "forward").substring(0,1)
+        const backward = addonSetUtils.getConfig(addonInfo["id"], "backward").substring(0,1)
+        const left = addonSetUtils.getConfig(addonInfo["id"], "left").substring(0,1)
+        const right = addonSetUtils.getConfig(addonInfo["id"], "right").substring(0,1)
+        const auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1").substring(0,1)
+        const auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2").substring(0,1)
         const keys = [
-            { keyCode: 87, elem: document.querySelector(".keystrokes-hold .key.key-w") },
-            { keyCode: 65, elem: document.querySelector(".keystrokes-hold .key.key-a") },
-            { keyCode: 83, elem: document.querySelector(".keystrokes-hold .key.key-s") },
-            { keyCode: 68, elem: document.querySelector(".keystrokes-hold .key.key-d") },
+            { keyCode: forward.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-w") },
+            { keyCode: left.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-a") },
+            { keyCode: backward.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-s") },
+            { keyCode: right.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-d") },
             { keyCode: 16, elem: document.querySelector(".keystrokes-hold .key.key-sft") },
             { keyCode: 32, elem: document.querySelector(".keystrokes-hold .key.key-space") },
             { keyCode: auxKey1.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-aux1") },
             { keyCode: auxKey2.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-aux2") }
         ]
+        document.querySelector(".keystrokes-hold .key.key-w").textContent = forward;
+        document.querySelector(".keystrokes-hold .key.key-a").textContent = left;
+        document.querySelector(".keystrokes-hold .key.key-s").textContent = backward;
+        document.querySelector(".keystrokes-hold .key.key-d").textContent = right;
         document.querySelector(".keystrokes-hold .key.key-aux1").textContent = auxKey1;
         document.querySelector(".keystrokes-hold .key.key-aux2").textContent = auxKey2;
 
@@ -186,7 +210,11 @@ class gatoAddon {
         addonSetUtils.createSlider(addonInfo["id"], "topPercent", "Y Position (%)", "Changes the Y position of the overlay. Based by percentage from top to bottom", 0, 100, 90, 1, "visualSettings", false);
         addonSetUtils.createSlider(addonInfo["id"], "scale", "Scale", "Changes the scale of the overlay", 0.1, 2.0, 0.5, 0.1, "visualSettings", false);
 
-        addonSetUtils.createCategory("extraKeysSettings", "Extra Keys");
+        addonSetUtils.createCategory("extraKeysSettings", "Change Keybinds");
+        addonSetUtils.createTextInput(addonInfo["id"], "forward", "Forward Key", "The Forward key that will show up on the overlay", "W", "extraKeysSettings", false);
+        addonSetUtils.createTextInput(addonInfo["id"], "backward", "Backward Key", "The Backward key that will show up on the overlay", "S", "extraKeysSettings", false);
+        addonSetUtils.createTextInput(addonInfo["id"], "left", "Left Key", "The Left key that will show up on the overlay", "A", "extraKeysSettings", false);
+        addonSetUtils.createTextInput(addonInfo["id"], "right", "Right Key", "The Right key that will show up on the overlay", "D", "extraKeysSettings", false);
         addonSetUtils.createTextInput(addonInfo["id"], "auxKey1", "Extra Key 1", "The extra key that will show up on the overlay", "Key 1", "extraKeysSettings", false);
         addonSetUtils.createTextInput(addonInfo["id"], "auxKey2", "Extra Key 2", "The extra key that will show up on the overlay", "Key 2", "extraKeysSettings", false);
 
