@@ -6,7 +6,7 @@ const addonInfo = {
     description: "Changes Matchmaking to Join Games with a specific gamemode",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
-const addonSettingsUtils = require(require('path').resolve('./') + '/app/utils/addonUtils');
+const addonSettingsUtils = require('../utils/addonUtils');
 const addonSetUtils = new addonSettingsUtils();
 
 class gatoAddon {
