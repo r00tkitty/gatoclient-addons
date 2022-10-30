@@ -6,7 +6,7 @@ const addonInfo = {
     description: "Keyboard Overlay based off of the Crankshaft Keystrokes by KraXen72",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
-const addonSettingsUtils = require(require('path').resolve('./') + '/app/utils/addonUtils');
+const addonSettingsUtils = require('../utils/addonUtils');
 const addonSetUtils = new addonSettingsUtils();
 
 class gatoAddon {
