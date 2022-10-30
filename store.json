@@ -7,7 +7,7 @@
         "version": "1.0.0",
         "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/keystrokesOverlay.js",
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/keyboardoverlay.png?raw=true",
-        "description": "Gatoclient Keyboard Overlay",
+        "description": "Keyboard Overlay based off of the Crankshaft Keystrokes by KraXen72",
         "isSocial": false
       }
     ]
