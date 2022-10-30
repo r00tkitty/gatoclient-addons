@@ -186,7 +186,7 @@ class gatoAddon {
         addonSetUtils.createCategory("visualSettings", "Visual Settings");
         addonSetUtils.createSlider(addonInfo["id"], "leftPercent", "X Position (%)", "Changes the X position of the overlay. Based by percentage from left to right", 0, 100, 50, 1, "visualSettings", false);
         addonSetUtils.createSlider(addonInfo["id"], "topPercent", "Y Position (%)", "Changes the Y position of the overlay. Based by percentage from top to bottom", 0, 100, 90, 1, "visualSettings", false);
-        addonSetUtils.createSlider(addonInfo["id"], "scale", "Scale", "Changes the scale of the overlay", 0.1, 3.0, 0.5, 0.1, "visualSettings", false);
+        addonSetUtils.createSlider(addonInfo["id"], "scale", "Scale", "Changes the scale of the overlay", 0.1, 2.0, 0.5, 0.1, "visualSettings", false);
 
         addonSetUtils.createCategory("extraKeysSettings", "Extra Keys");
         addonSetUtils.createTextInput(addonInfo["id"], "auxKey1", "Extra Key 1", "The extra key that will show up on the overlay", "Key 1", "extraKeysSettings", false);
