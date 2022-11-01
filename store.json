@@ -18,6 +18,15 @@
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/bettermatchmaker.png?raw=true",
         "description": "Changes Matchmaking to Join Games with a specific gamemode",
         "isSocial": false
+      },
+      {
+        "name": "Do Not Download This",
+        "id": "twitchUtility",
+        "version": "1.0.0",
+        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/twitchChat.js",
+        "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/bettermatchmaker.png?raw=true",
+        "description": "This is a Debugging plugin. It will be replaced soon",
+        "isSocial": false
       }
     ]
   }
