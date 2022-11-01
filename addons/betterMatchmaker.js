@@ -1,10 +1,11 @@
 const addonInfo = {
     name: "Better Matchmaker",  // Addon Name
     id: "betterMatchmaker",     // Addon ID (Referenced by save data)
-    version: "1.0.0",        // Version
+    version: "1.0.1",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/bettermatchmaker.png?raw=true",           // Thumbnail URL
     description: "Changes Matchmaking to Join Games with a specific gamemode",
-    isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
+    isSocial: false,         // UNSUPPORTED - Maybe a future Krunker Hub addon support
+    modules: []
 };
 const addonSettingsUtils = require(require('path').resolve('./') + '/resources/app.asar/app/utils/addonUtils');
 const addonSetUtils = new addonSettingsUtils();
