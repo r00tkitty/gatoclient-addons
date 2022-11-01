@@ -23,7 +23,7 @@
         "name": "Do Not Download This",
         "id": "twitchUtility",
         "version": "1.0.0",
-        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/twitchChat.js",
+        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/twitchUtility.js",
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/bettermatchmaker.png?raw=true",
         "description": "This is a Debugging plugin. It will be replaced soon",
         "isSocial": false
