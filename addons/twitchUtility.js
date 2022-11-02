@@ -1,12 +1,12 @@
 const addonInfo = {
     name: "Twitch Chat Integration",  // Addon Name
-    id: "twitchChat",     // Addon ID (Referenced by save data)
+    id: "twitchUtility",     // Addon ID (Referenced by save data)
     version: "1.0.0",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/keyboardoverlay.png?raw=true",           // Thumbnail URL
     description: "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
     isSocial: false,         // UNSUPPORTED - Maybe a future Krunker Hub addon support
     modules: [
-        "tmi.js"
+        "tmi.js@1.8.5"
     ]
 };
 const path = require('path');
@@ -31,8 +31,18 @@ class gatoAddon {
 
     // Runs when page starts loading
     static initialize() {
-        const tmi = manager.require('tmi.js');
-        console.log("TMI.js installed properly!");
+        async function loadDependencies(modules){
+            for (const mod in modules) {
+                await manager.install(modules[mod]);
+                console.log("Initialized " + modules[mod]);
+            }
+        }
+        async function startTwitchIntegration(){
+            await loadDependencies(modules);
+            const tmi = manager.require('tmi.js');
+            console.log("TMI.js installed properly! Pogchampion");
+        }
+        startTwitchIntegration();
     }
 
     // Runs when page fully loaded
