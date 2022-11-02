@@ -1,19 +1,19 @@
 const addonInfo = {
     name: "Twitch Chat Integration",  // Addon Name
-    id: "twitchUtility",     // Addon ID (Referenced by save data)
+    id: "twitchChat",     // Addon ID (Referenced by save data)
     version: "1.0.0",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/keyboardoverlay.png?raw=true",           // Thumbnail URL
     description: "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
     isSocial: false,         // UNSUPPORTED - Maybe a future Krunker Hub addon support
     modules: [
-        "@twurple/auth",
-        "@twurple/chat",
-        "@twurple/auth-electron"
+        "tmi.js"
     ]
 };
 const path = require('path');
 const fs = require('fs');
 const addonSettingsUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/addonUtils');
+const {PluginManager} = require(path.resolve('./') + '/resources/app.asar/node_modules/live-plugin-manager');
+const manager = new PluginManager({pluginsPath:path.join(__dirname, "./plugin_packages")});
 const addonSetUtils = new addonSettingsUtils();
 const client_id = "omnaylafso0f3fdtzwrwk5qdb24km9";
 
@@ -31,15 +31,8 @@ class gatoAddon {
 
     // Runs when page starts loading
     static initialize() {
-        const { ElectronAuthProvider } = require("./plugin_packages/@twurple/auth-electron");
-        const redirectUri = 'http://localhost';
-        console.log("Twitch Int > Initializing Twitch Stuff");
-            
-        const authProvider = new ElectronAuthProvider({
-            clientId,
-            redirectUri
-        });
-    
+        const tmi = manager.require('tmi.js');
+        console.log("TMI.js installed properly!");
     }
 
     // Runs when page fully loaded
