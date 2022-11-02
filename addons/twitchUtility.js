@@ -6,7 +6,7 @@ const addonInfo = {
     description: "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
     isSocial: false,         // UNSUPPORTED - Maybe a future Krunker Hub addon support
     modules: [
-        "tmi.js@1.8.5"
+        "tmi.js"
     ]
 };
 const path = require('path');
