@@ -1,11 +1,10 @@
 const addonInfo = {
     name: "Keystrokes Overlay",  // Addon Name
     id: "keystrokeOverlay",     // Addon ID (Referenced by save data)
-    version: "1.0.2",        // Version
+    version: "1.0.3",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/keyboardoverlay.png?raw=true",           // Thumbnail URL
     description: "Keyboard Overlay based off of the Crankshaft Keystrokes by KraXen72",
-    isSocial: false,         // UNSUPPORTED - Maybe a future Krunker Hub addon support
-    modules: []
+    isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
 const addonSettingsUtils = require(require('path').resolve('./') + '/resources/app.asar/app/utils/addonUtils');
 const addonSetUtils = new addonSettingsUtils();
@@ -169,12 +168,12 @@ class gatoAddon {
 
     // Runs when settings update
     static updateSettings() {
-        const forward = addonSetUtils.getConfig(addonInfo["id"], "forward").substring(0,1)
-        const backward = addonSetUtils.getConfig(addonInfo["id"], "backward").substring(0,1)
-        const left = addonSetUtils.getConfig(addonInfo["id"], "left").substring(0,1)
-        const right = addonSetUtils.getConfig(addonInfo["id"], "right").substring(0,1)
-        const auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1").substring(0,1)
-        const auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2").substring(0,1)
+        const forward = addonSetUtils.getConfig(addonInfo["id"], "forward").substring(0,1).toUpperCase();
+        const backward = addonSetUtils.getConfig(addonInfo["id"], "backward").substring(0,1).toUpperCase();
+        const left = addonSetUtils.getConfig(addonInfo["id"], "left").substring(0,1).toUpperCase();
+        const right = addonSetUtils.getConfig(addonInfo["id"], "right").substring(0,1).toUpperCase();
+        const auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1").substring(0,1).toUpperCase();
+        const auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2").substring(0,1).toUpperCase();
         const keys = [
             { keyCode: forward.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-w") },
             { keyCode: left.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-a") },
@@ -204,7 +203,7 @@ class gatoAddon {
         addonSetUtils.createForm(addonInfo["id"]);
 
         addonSetUtils.createCategory("addonSettings", "Addon Settings");
-        addonSetUtils.createCheckbox(addonInfo["id"], "enabled", "Enable Addon", "Determines if the Addon loads when refreshing page", "addonSettings", false);
+        addonSetUtils.createCheckbox(addonInfo["id"], "enabled", "Enable Addon", "Determines if the Addon loads when refreshing page", "addonSettings", false, 2);
 
         addonSetUtils.createCategory("visualSettings", "Visual Settings");
         addonSetUtils.createSlider(addonInfo["id"], "leftPercent", "X Position (%)", "Changes the X position of the overlay. Based by percentage from left to right", 0, 100, 50, 1, "visualSettings", false);
