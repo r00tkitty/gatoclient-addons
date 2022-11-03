@@ -1,11 +1,10 @@
 const addonInfo = {
     name: "Better Matchmaker",  // Addon Name
     id: "betterMatchmaker",     // Addon ID (Referenced by save data)
-    version: "1.0.1",        // Version
+    version: "1.0.2",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/bettermatchmaker.png?raw=true",           // Thumbnail URL
     description: "Changes Matchmaking to Join Games with a specific gamemode",
-    isSocial: false,         // UNSUPPORTED - Maybe a future Krunker Hub addon support
-    modules: []
+    isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
 const addonSettingsUtils = require(require('path').resolve('./') + '/resources/app.asar/app/utils/addonUtils');
 const addonSetUtils = new addonSettingsUtils();
@@ -124,9 +123,9 @@ class gatoAddon {
         addonSetUtils.createForm(addonInfo["id"]);
 
         addonSetUtils.createCategory("addonSettings", "Addon Settings");
-        addonSetUtils.createCheckbox(addonInfo["id"], "enabled", "Enable Addon", "Determines if the Addon loads when refreshing page", "addonSettings", false);
+        addonSetUtils.createCheckbox(addonInfo["id"], "enabled", "Enable Addon", "Determines if the Addon loads when refreshing page", "addonSettings", false, 2);
         var dropdownOptions = [["ffa", "Free For All"], ["point", "Point"], ["ctf", "Capture The Flag"], ["kc", "Kill Confirmed"]];
-        addonSetUtils.createDropdown(addonInfo["id"], "gamemode", "Desired Gamemode", "Choose what Gamemode the matchmaker will try to find", dropdownOptions, "addonSettings", false);
+        addonSetUtils.createDropdown(addonInfo["id"], "gamemode", "Desired Gamemode", "Choose what Gamemode the matchmaker will try to find", dropdownOptions, "addonSettings", false, 2);
 
         addonSetUtils.hookSaving(addonInfo["id"], __dirname);
     }
