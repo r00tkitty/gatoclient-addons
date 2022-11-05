@@ -2,7 +2,19 @@
   "badges": [
     {
       "id": "gatoDeveloper",
-      "url": "https://cdn.discordapp.com/attachments/901905234861883432/901905274946846790/gatobadge.png"
+      "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatodev.png?raw=true"
+    },
+    {
+      "id": "gatoCC",
+      "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatocc.png?raw=true"
+    },
+    {
+      "id": "gatoWinner",
+      "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/winner.png?raw=true"
+    },
+    {
+      "id": "gatoqt",
+      "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatoqt.png?raw=true"
     }
   ]
 }
