@@ -1,7 +1,7 @@
 const addonInfo = {
     name: "TwitchUtility",  // Addon Name
     id: "twitchUtility",     // Addon ID (Referenced by save data)
-    version: "1.0.1",        // Version
+    version: "1.0.2",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/twitchutility.png?raw=true",           // Thumbnail URL
     description: "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
@@ -134,6 +134,13 @@ class gatoAddon {
                     }
                 }
             });
+
+            document.getElementById("subLogoButtons").innerHTML += `<div class="button small buttonPI material-icons" id="menuBtnLinkChat" onmouseenter="playTick()" onclick="playSelect()" style="font-size:32px!important">chat link</div>`;
+            let linkToChatButton = document.getElementById("menuBtnLinkChat");
+            linkToChatButton.addEventListener("click", () => {
+                client.say(`${user}`, `Krunker Link Has been Posted by the Streamer ` + window.location.href);
+                notificationUtils.createNotif("link", "Posted link to Twitch Chat", "Viewers, feel free to join through the link in the messsage!", "#42d12c", 3000);
+            })
         }
         console.log("TwitchUtility Module Requesting Token...");
         initTwitchIntegration(this.getToken());
