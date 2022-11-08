@@ -138,7 +138,7 @@ class gatoAddon {
             document.getElementById("subLogoButtons").innerHTML += `<div class="button small buttonPI material-icons" id="menuBtnLinkChat" onmouseenter="playTick()" onclick="playSelect()" style="font-size:32px!important">chat link</div>`;
             let linkToChatButton = document.getElementById("menuBtnLinkChat");
             linkToChatButton.addEventListener("click", () => {
-                client.say(`${user}`, `Krunker Link Has been Posted by the Streamer ` + window.location.href);
+                client.say(`${user}`, `Link: ` + window.location.href);
                 notificationUtils.createNotif("link", "Posted link to Twitch Chat", "Viewers, feel free to join through the link in the messsage!", "#42d12c", 3000);
             })
         }
