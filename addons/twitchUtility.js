@@ -1,7 +1,7 @@
 const addonInfo = {
     name: "TwitchUtility",  // Addon Name
     id: "twitchUtility",     // Addon ID (Referenced by save data)
-    version: "1.0.0",        // Version
+    version: "1.0.1",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/twitchutility.png?raw=true",           // Thumbnail URL
     description: "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
@@ -11,6 +11,7 @@ const { shell } = require('electron');
 const fetch = (...args) => import(path.resolve('./') + '/resources/app.asar/node_modules/node-fetch').then(({ default: fetch }) => fetch(...args));
 const { createServer } = require('http');
 const addonSettingsUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/addonUtils');
+const notificationUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/notificationUtils');
 const addonSetUtils = new addonSettingsUtils();
 const client_id = "omnaylafso0f3fdtzwrwk5qdb24km9";
 const tmi = require(path.resolve('./') + '/resources/app.asar/node_modules/tmi.js/');
@@ -77,7 +78,7 @@ class gatoAddon {
         injectSettingsCss(css);
 
         let chatboxEnabled = addonSetUtils.getConfig(addonInfo["id"], "chatboxEnabled");
-        if(chatboxEnabled == true){
+        if (chatboxEnabled == true) {
             let chatHolder = document.getElementById("chatHolder");
             let chatList = document.getElementById("chatList");
             var twitchChat = chatList.cloneNode(false);
@@ -136,6 +137,27 @@ class gatoAddon {
         }
         console.log("TwitchUtility Module Requesting Token...");
         initTwitchIntegration(this.getToken());
+
+        function handleKeybinds(event) {
+            switch (event.target.tagName.toLowerCase()) {
+                case "input":
+                case "textarea":
+                case "select":
+                case "button":
+                    break;
+                default:
+                    if (event.keyCode === addonSetUtils.getConfig(addonInfo["id"], "linkKey").substring(0, 1).charCodeAt(0)) {
+                        addonSetUtils.addConfig(addonInfo["id"], "linkCommand", !addonSetUtils.getConfig(addonInfo["id"], "linkCommand"));
+                        if (addonSetUtils.getConfig(addonInfo["id"], "linkCommand")) {
+                            notificationUtils.createNotif("link", "!Link is Enabled", "Viewers, feel free to join, do !link in chat!", "#42d12c", 3000);
+                        } else {
+                            notificationUtils.createNotif("link", "!Link is Disabled", "Viewers can no longer join in on the action.", "#d1312c", 3000);
+                        }
+                    }
+                    break;
+            }
+        }
+        document.addEventListener("keydown", handleKeybinds);
     }
 
     // Runs when settings update
@@ -230,6 +252,7 @@ class gatoAddon {
 
         addonSetUtils.createCategory("featureSettings", "Features");
         addonSetUtils.createCheckbox(addonInfo["id"], "linkCommand", "!Link command", "Allows users in chat to comment !Link to get the game link", "featureSettings", false);
+        addonSetUtils.createTextInput(addonInfo["id"], "linkKey", "Link Toggle Keybind", "Add a quick keybind that toggles the !Link command", "L", "featureSettings", false);
 
         addonSetUtils.createCategory("chatboxSettings", "Twitch Chatbox Settings");
         addonSetUtils.createCheckbox(addonInfo["id"], "chatboxEnabled", "Enable Chatbox", "Determines if the Addon loads when refreshing page", "chatboxSettings", false, 2);
