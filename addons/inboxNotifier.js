@@ -1,7 +1,7 @@
 const addonInfo = {
     name: "Live Inbox Notifications",  // Addon Name
     id: "inboxNotifier",     // Addon ID (Referenced by save data)
-    version: "1.0.0",        // Version
+    version: "1.0.1",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/inboxnotifier.png?raw=true",           // Thumbnail URL
     description: "Shows a notification in game when you get a new message in your inbox",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
@@ -104,11 +104,10 @@ class gatoAddon {
                 checkNotifs(args);
                 return old.apply(this, arguments)
             }
-            setInterval(async () => {
-                window.windows[29].gen()
-            }, 10000)
+            document.addEventListener('pointerlockchange', () => {window.windows[29].gen()}, false);
             setTimeout(async () => {
                 window.windows[29].switchTab(0)
+                window.windows[29].gen()
             }, 5000)
         }
     }
