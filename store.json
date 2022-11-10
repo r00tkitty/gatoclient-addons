@@ -27,6 +27,15 @@
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/twitchutility.png?raw=true",
         "description": "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
         "isSocial": false
+      },
+      {
+        "name": "Live Inbox Notifications",
+        "id": "inboxNotifier",
+        "version": "1.0.2",
+        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/inboxNotifier.js",
+        "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/inboxnotifier.png?raw=true",
+        "description": "Shows a notification in game when you get a new message in your inbox",
+        "isSocial": false
       }
     ]
   }
