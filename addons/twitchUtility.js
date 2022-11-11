@@ -1,7 +1,7 @@
 const addonInfo = {
     name: "TwitchUtility",  // Addon Name
     id: "twitchUtility",     // Addon ID (Referenced by save data)
-    version: "1.0.2",        // Version
+    version: "1.0.3",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/twitchutility.png?raw=true",           // Thumbnail URL
     description: "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
@@ -10,11 +10,13 @@ const path = require('path');
 const { shell } = require('electron');
 const fetch = (...args) => import(path.resolve('./') + '/resources/app.asar/node_modules/node-fetch').then(({ default: fetch }) => fetch(...args));
 const { createServer } = require('http');
+const { ifError } = require('assert');
 const addonSettingsUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/addonUtils');
 const notificationUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/notificationUtils');
 const addonSetUtils = new addonSettingsUtils();
 const client_id = "omnaylafso0f3fdtzwrwk5qdb24km9";
 const tmi = require(path.resolve('./') + '/resources/app.asar/node_modules/tmi.js/');
+const emoteParser = require(path.resolve('./') + '/resources/app.asar/node_modules/tmi-emote-parse');
 
 class gatoAddon {
     // Fetch Function - DO NOT REMOVE
@@ -30,6 +32,13 @@ class gatoAddon {
         addonSetUtils.addConfig(addonInfo["id"], "chatboxOpacity", "1");
         addonSetUtils.addConfig(addonInfo["id"], "chatboxBgOpacity", "0.2");
         addonSetUtils.addConfig(addonInfo["id"], "chatboxHeight", "2.5");
+
+        addonSetUtils.addConfig(addonInfo["id"], "emotes", true);
+        addonSetUtils.addConfig(addonInfo["id"], "badges", true);
+
+        addonSetUtils.addConfig(addonInfo["id"], "bttv", false);
+        addonSetUtils.addConfig(addonInfo["id"], "ffz", false);
+        addonSetUtils.addConfig(addonInfo["id"], "7tv", false);
     }
 
     // Runs when page starts loading
@@ -68,6 +77,10 @@ class gatoAddon {
             box-shadow:unset;
             border-color:#36393f
         }
+        .message-emote{
+            width:1.5rem;
+            height:1.5rem;
+        }
         `
         const injectSettingsCss = (css, classId = "twitchutility-css") => {
             let s = document.createElement("style");
@@ -92,6 +105,10 @@ class gatoAddon {
             var user = addonSetUtils.getConfig(addonInfo["id"], "channelName");
             const client = new tmi.Client({
                 options: { debug: true },
+                connection: {
+                    reconnect: true,
+                    secure: true
+                },
                 clientId: client_id,
                 identity: {
                     username: `${user}`,
@@ -99,8 +116,16 @@ class gatoAddon {
                 },
                 channels: [`${user}`]
             });
-
-            client.connect();
+            client.connect().catch(console.error);
+            if (addonSetUtils.getConfig(addonInfo["id"], "emotes") == true || addonSetUtils.getConfig(addonInfo["id"], "badges") == true) {
+                emoteParser.setDebug(true);
+                emoteParser.events.on("error", e => {
+                    console.log("Error:", e);
+                })
+                emoteParser.setTwitchCredentials(client_id, token);
+                emoteParser.loadAssets("twitch");
+                emoteParser.loadAssets(user, { "bttv": addonSetUtils.getConfig(addonInfo["id"], "bttv"), "ffz": addonSetUtils.getConfig(addonInfo["id"], "ffz"), "7tv": addonSetUtils.getConfig(addonInfo["id"], "7tv") });
+            }
 
             console.log("TwitchUtility Connected!");
 
@@ -113,6 +138,19 @@ class gatoAddon {
                 }
 
                 if (chatboxEnabled == true) {
+                    var badgePrepend = "";
+                    if (addonSetUtils.getConfig(addonInfo["id"], "badges") == true) {
+                        var ttvBadges = emoteParser.getBadges(tags, channel);
+                        for (const badge in ttvBadges) {
+                            badgePrepend += `<img class="message-emote"src="${ttvBadges[badge]["img"]}"/>`;
+                        }
+                    }
+                    badgePrepend += " ";
+                    var messageHTML = message;
+                    if(addonSetUtils.getConfig(addonInfo["id"], "emotes") == true){
+                        messageHTML = emoteParser.replaceEmotes(message, tags, channel, self)
+                    }
+
                     var _msgElement = document.createElement("div");
                     _msgElement.setAttribute("data-tab", "-1");
                     _msgElement.id = "chatMsg_" + _messageNumber;
@@ -121,7 +159,7 @@ class gatoAddon {
                     _msgItem.classList.add("chatItem");
                     _msgItem.classList.add("twitchMsg");
                     _msgItem.style = `background-color: rgba(0, 0, 0, ${addonSetUtils.getConfig(addonInfo["id"], "chatboxBgOpacity")})`;
-                    _msgItem.innerHTML = `‎<span style="color:${tags.color}">${tags['display-name']}: </span><span class="chatMsg">` + message + "</span>‎";
+                    _msgItem.innerHTML = `‎<span style="color:${tags.color}">${badgePrepend}${tags['display-name']}: </span><span class="chatMsg">` + messageHTML + "</span>‎";
                     _msgElement.appendChild(_msgItem);
 
                     let twitchChatList = document.getElementById("twitchChatList");
@@ -266,6 +304,13 @@ class gatoAddon {
         addonSetUtils.createSlider(addonInfo["id"], "chatboxOpacity", "Chat Opacity", "Changes twitch chat opacity", 0, 1.0, 1.0, 0.1, "chatboxSettings", false);
         addonSetUtils.createSlider(addonInfo["id"], "chatboxBgOpacity", "Chat BG Opac", "Changes message background opacity", 0, 1.0, 0.2, 0.1, "chatboxSettings", false);
         addonSetUtils.createSlider(addonInfo["id"], "chatboxHeight", "Chat Height", "Changes maximum height of chatbox", 0, 5.0, 2.5, 0.1, "chatboxSettings", false);
+
+        addonSetUtils.createCategory("emoteSettings", "Twitch Chatbox: Emotes + Badges");
+        addonSetUtils.createCheckbox(addonInfo["id"], "emotes", "Enable Emotes", "Show Emotes in the Twitch Chatbox", "emoteSettings", false, 2);
+        addonSetUtils.createCheckbox(addonInfo["id"], "badges", "Enable Badges", "Show Badges in the Twitch Chatbox", "emoteSettings", false, 2);
+        addonSetUtils.createCheckbox(addonInfo["id"], "bttv", "BTTV Support", "Show Emotes in the Twitch Chatbox", "emoteSettings", false, 2);
+        addonSetUtils.createCheckbox(addonInfo["id"], "ffz", "FFZ Support", "Show Emotes in the Twitch Chatbox", "emoteSettings", false, 2);
+        addonSetUtils.createCheckbox(addonInfo["id"], "7tv", "7TV Support", "Show Emotes in the Twitch Chatbox", "emoteSettings", false, 2);
 
         addonSetUtils.hookSaving(addonInfo["id"], __dirname);
     }
