@@ -1,12 +1,13 @@
 const addonInfo = {
     name: "Keystrokes Overlay",  // Addon Name
     id: "keystrokeOverlay",     // Addon ID (Referenced by save data)
-    version: "1.0.3",        // Version
+    version: "1.0.4",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/keyboardoverlay.png?raw=true",           // Thumbnail URL
     description: "Keyboard Overlay based off of the Crankshaft Keystrokes by KraXen72",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
 const addonSettingsUtils = require(require('path').resolve('./') + '/resources/app.asar/app/utils/addonUtils');
+const { keyFromCode } = require(require('path').resolve('./') + '/resources/app.asar/app/utils/utils');
 const addonSetUtils = new addonSettingsUtils();
 
 class gatoAddon {
@@ -19,12 +20,12 @@ class gatoAddon {
         // REQUIRED
         addonSetUtils.addConfig(addonInfo["id"], "enabled", true);
         // Add your custom configuration options here
-        addonSetUtils.addConfig(addonInfo["id"], "forward", "W");
-        addonSetUtils.addConfig(addonInfo["id"], "backward", "S");
-        addonSetUtils.addConfig(addonInfo["id"], "left", "A");
-        addonSetUtils.addConfig(addonInfo["id"], "right", "D");
-        addonSetUtils.addConfig(addonInfo["id"], "auxKey1", "R");
-        addonSetUtils.addConfig(addonInfo["id"], "auxKey2", "G");
+        addonSetUtils.addConfig(addonInfo["id"], "forward", "87");
+        addonSetUtils.addConfig(addonInfo["id"], "backward", "83");
+        addonSetUtils.addConfig(addonInfo["id"], "left", "65");
+        addonSetUtils.addConfig(addonInfo["id"], "right", "68");
+        addonSetUtils.addConfig(addonInfo["id"], "auxKey1", "82");
+        addonSetUtils.addConfig(addonInfo["id"], "auxKey2", "71");
 
         addonSetUtils.addConfig(addonInfo["id"], "leftPercent", 50);
         addonSetUtils.addConfig(addonInfo["id"], "topPercent", 90);
@@ -38,25 +39,41 @@ class gatoAddon {
 
     // Runs when page fully loaded
     static domLoaded() {
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (mutation.type === 'attributes') {
+                    document.addEventListener("keydown", handleKeyDown)
+                    document.addEventListener("keyup", handleKeyUp)
+
+                    var canvases = Array.from(document.getElementsByTagName('canvas'));
+                    canvases.forEach(element => element.addEventListener("mousedown", handleMouseDown)); // This is a workaround since you can't use document mousedown when canvas-locked
+
+                    document.addEventListener("mouseup", handleMouseUp);
+                    observer.disconnect();
+                }
+            });
+        });
+        let loadingBg = document.getElementById("loadingBg")
+        observer.observe(loadingBg, { attributes: true });
         // here you can mess with the values
         const size = 2.5 //how many rem will one of the keys be in height
-        const forward = addonSetUtils.getConfig(addonInfo["id"], "forward").substring(0,1)
-        const backward = addonSetUtils.getConfig(addonInfo["id"], "backward").substring(0,1)
-        const left = addonSetUtils.getConfig(addonInfo["id"], "left").substring(0,1)
-        const right = addonSetUtils.getConfig(addonInfo["id"], "right").substring(0,1)
-        const auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1").substring(0,1)
-        const auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2").substring(0,1)
+        const forward = addonSetUtils.getConfig(addonInfo["id"], "forward")
+        const backward = addonSetUtils.getConfig(addonInfo["id"], "backward")
+        const left = addonSetUtils.getConfig(addonInfo["id"], "left")
+        const right = addonSetUtils.getConfig(addonInfo["id"], "right")
+        const auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1")
+        const auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2")
 
         //ok don't touch it past this point unless you know what you're doing
         const keysHTML = `
-    <span class="key key-w">${forward}</span>
-    <span class="key key-a">${left}</span>
-    <span class="key key-s">${backward}</span>
-    <span class="key key-d">${right}</span>
+    <span class="key key-w">${keyFromCode(forward)}</span>
+    <span class="key key-a">${keyFromCode(left)}</span>
+    <span class="key key-s">${keyFromCode(backward)}</span>
+    <span class="key key-d">${keyFromCode(right)}</span>
     <span class="key key-sft">sft</span>
     <span class="key key-space">__</span>
-    <span class="key key-aux1">${auxKey1}</span>
-    <span class="key key-aux2">${auxKey2}</span>
+    <span class="key key-aux1">${keyFromCode(auxKey1)}</span>
+    <span class="key key-aux2">${keyFromCode(auxKey2)}</span>
 `
         function precisionRound(number, precision = 2) {
             let factor = Math.pow(10, precision);
@@ -77,7 +94,7 @@ class gatoAddon {
     .key {
         background: #262626;
         color: white;
-        font-size: ${precisionRound((size / 2) * 1)}rem;
+        font-size: ${precisionRound((size / 2) * 0.66)}rem;
         font-weight: bold;
         border: 2px solid black;
         border-radius: 5px;
@@ -122,74 +139,116 @@ class gatoAddon {
         document.getElementById("inGameUI").appendChild(hold)
 
         const keys = [
-            { keyCode: forward.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-w") },
-            { keyCode: left.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-a") },
-            { keyCode: backward.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-s") },
-            { keyCode: right.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-d") },
+            { keyCode: forward, elem: document.querySelector(".keystrokes-hold .key.key-w") },
+            { keyCode: left, elem: document.querySelector(".keystrokes-hold .key.key-a") },
+            { keyCode: backward, elem: document.querySelector(".keystrokes-hold .key.key-s") },
+            { keyCode: right, elem: document.querySelector(".keystrokes-hold .key.key-d") },
             { keyCode: 16, elem: document.querySelector(".keystrokes-hold .key.key-sft") },
             { keyCode: 32, elem: document.querySelector(".keystrokes-hold .key.key-space") },
-            { keyCode: auxKey1.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-aux1") },
-            { keyCode: auxKey2.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-aux2") }
+            { keyCode: auxKey1, elem: document.querySelector(".keystrokes-hold .key.key-aux1") },
+            { keyCode: auxKey2, elem: document.querySelector(".keystrokes-hold .key.key-aux2") }
         ]
 
         function handleKeyDown(event) {
-            keys[0]["keyCode"] = keys[0]["elem"].textContent.charCodeAt(0);
-            keys[1]["keyCode"] = keys[1]["elem"].textContent.charCodeAt(0);
-            keys[2]["keyCode"] = keys[2]["elem"].textContent.charCodeAt(0);
-            keys[3]["keyCode"] = keys[3]["elem"].textContent.charCodeAt(0);
-            keys[6]["keyCode"] = keys[6]["elem"].textContent.charCodeAt(0);
-            keys[7]["keyCode"] = keys[7]["elem"].textContent.charCodeAt(0);
+            keys[0]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "forward")
+            keys[1]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "left")
+            keys[2]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "backward")
+            keys[3]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "right")
+            keys[6]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "auxKey1")
+            keys[7]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "auxKey2")
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i];
-                if (event.keyCode === key.keyCode) {
+                var kC = key.keyCode;
+                if (typeof kC === "number") {
+                    kC = parseInt(kC);
+                }
+                if (String(kC).substring(0, 1) != "M" && String(event.keyCode) === String(kC)) {
                     key.elem.classList.add("active")
                 }
             }
         }
-
         function handleKeyUp(event) {
-            keys[0]["keyCode"] = keys[0]["elem"].textContent.charCodeAt(0);
-            keys[1]["keyCode"] = keys[1]["elem"].textContent.charCodeAt(0);
-            keys[2]["keyCode"] = keys[2]["elem"].textContent.charCodeAt(0);
-            keys[3]["keyCode"] = keys[3]["elem"].textContent.charCodeAt(0);
-            keys[6]["keyCode"] = keys[6]["elem"].textContent.charCodeAt(0);
-            keys[7]["keyCode"] = keys[7]["elem"].textContent.charCodeAt(0);
+            keys[0]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "forward")
+            keys[1]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "left")
+            keys[2]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "backward")
+            keys[3]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "right")
+            keys[6]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "auxKey1")
+            keys[7]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "auxKey2")
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i];
-                if (event.keyCode === key.keyCode) {
+                var kC = key.keyCode;
+                if (typeof kC === "number") {
+                    kC = parseInt(kC);
+                }
+                if (String(kC).substring(0, 1) != "M" && String(event.keyCode) === String(kC)) {
                     key.elem.classList.remove("active")
                 }
             }
         }
-
-        document.addEventListener("keydown", handleKeyDown)
-        document.addEventListener("keyup", handleKeyUp)
+        function handleMouseDown(event) {
+            keys[0]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "forward")
+            keys[1]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "left")
+            keys[2]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "backward")
+            keys[3]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "right")
+            keys[6]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "auxKey1")
+            keys[7]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "auxKey2")
+            for (let i = 0; i < keys.length; i++) {
+                const key = keys[i];
+                var kC = key.keyCode;
+                if (typeof kC === "number") {
+                    kC = parseInt(kC);
+                }
+                if (String(kC).substring(0, 1) == "M" && "M" + event.button === String(kC)) {
+                    window.log("Mouse Down " + kC);
+                    key.elem.classList.add("active")
+                }
+            }
+        }
+        function handleMouseUp(event) {
+            keys[0]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "forward")
+            keys[1]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "left")
+            keys[2]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "backward")
+            keys[3]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "right")
+            keys[6]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "auxKey1")
+            keys[7]["keyCode"] = addonSetUtils.getConfig(addonInfo["id"], "auxKey2")
+            for (let i = 0; i < keys.length; i++) {
+                const key = keys[i];
+                var kC = key.keyCode;
+                if (typeof kC === "number") {
+                    kC = parseInt(kC);
+                }
+                if (String(kC).substring(0, 1) == "M" && "M" + event.button === String(kC)) {
+                    window.log("Mouse Up " + kC);
+                    key.elem.classList.remove("active")
+                }
+            }
+        }
     }
 
     // Runs when settings update
     static updateSettings() {
-        const forward = addonSetUtils.getConfig(addonInfo["id"], "forward").substring(0,1).toUpperCase();
-        const backward = addonSetUtils.getConfig(addonInfo["id"], "backward").substring(0,1).toUpperCase();
-        const left = addonSetUtils.getConfig(addonInfo["id"], "left").substring(0,1).toUpperCase();
-        const right = addonSetUtils.getConfig(addonInfo["id"], "right").substring(0,1).toUpperCase();
-        const auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1").substring(0,1).toUpperCase();
-        const auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2").substring(0,1).toUpperCase();
+        const forward = addonSetUtils.getConfig(addonInfo["id"], "forward");
+        const backward = addonSetUtils.getConfig(addonInfo["id"], "backward");
+        const left = addonSetUtils.getConfig(addonInfo["id"], "left");
+        const right = addonSetUtils.getConfig(addonInfo["id"], "right");
+        const auxKey1 = addonSetUtils.getConfig(addonInfo["id"], "auxKey1");
+        const auxKey2 = addonSetUtils.getConfig(addonInfo["id"], "auxKey2");
         const keys = [
-            { keyCode: forward.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-w") },
-            { keyCode: left.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-a") },
-            { keyCode: backward.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-s") },
-            { keyCode: right.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-d") },
+            { keyCode: forward, elem: document.querySelector(".keystrokes-hold .key.key-w") },
+            { keyCode: left, elem: document.querySelector(".keystrokes-hold .key.key-a") },
+            { keyCode: backward, elem: document.querySelector(".keystrokes-hold .key.key-s") },
+            { keyCode: right, elem: document.querySelector(".keystrokes-hold .key.key-d") },
             { keyCode: 16, elem: document.querySelector(".keystrokes-hold .key.key-sft") },
             { keyCode: 32, elem: document.querySelector(".keystrokes-hold .key.key-space") },
-            { keyCode: auxKey1.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-aux1") },
-            { keyCode: auxKey2.charCodeAt(0), elem: document.querySelector(".keystrokes-hold .key.key-aux2") }
+            { keyCode: auxKey1, elem: document.querySelector(".keystrokes-hold .key.key-aux1") },
+            { keyCode: auxKey2, elem: document.querySelector(".keystrokes-hold .key.key-aux2") }
         ]
-        document.querySelector(".keystrokes-hold .key.key-w").textContent = forward;
-        document.querySelector(".keystrokes-hold .key.key-a").textContent = left;
-        document.querySelector(".keystrokes-hold .key.key-s").textContent = backward;
-        document.querySelector(".keystrokes-hold .key.key-d").textContent = right;
-        document.querySelector(".keystrokes-hold .key.key-aux1").textContent = auxKey1;
-        document.querySelector(".keystrokes-hold .key.key-aux2").textContent = auxKey2;
+        document.querySelector(".keystrokes-hold .key.key-w").textContent = keyFromCode(forward);
+        document.querySelector(".keystrokes-hold .key.key-a").textContent = keyFromCode(left);
+        document.querySelector(".keystrokes-hold .key.key-s").textContent = keyFromCode(backward);
+        document.querySelector(".keystrokes-hold .key.key-d").textContent = keyFromCode(right);
+        document.querySelector(".keystrokes-hold .key.key-aux1").textContent = keyFromCode(auxKey1);
+        document.querySelector(".keystrokes-hold .key.key-aux2").textContent = keyFromCode(auxKey2);
 
         var scale = Number(addonSetUtils.getConfig(addonInfo["id"], "scale")) + 0.5;
         var leftPos = addonSetUtils.getConfig(addonInfo["id"], "leftPercent")
@@ -211,12 +270,12 @@ class gatoAddon {
         addonSetUtils.createSlider(addonInfo["id"], "scale", "Scale", "Changes the scale of the overlay", 0.1, 2.0, 0.5, 0.1, "visualSettings", false);
 
         addonSetUtils.createCategory("extraKeysSettings", "Change Keybinds");
-        addonSetUtils.createTextInput(addonInfo["id"], "forward", "Forward Key", "The Forward key that will show up on the overlay", "W", "extraKeysSettings", false);
-        addonSetUtils.createTextInput(addonInfo["id"], "backward", "Backward Key", "The Backward key that will show up on the overlay", "S", "extraKeysSettings", false);
-        addonSetUtils.createTextInput(addonInfo["id"], "left", "Left Key", "The Left key that will show up on the overlay", "A", "extraKeysSettings", false);
-        addonSetUtils.createTextInput(addonInfo["id"], "right", "Right Key", "The Right key that will show up on the overlay", "D", "extraKeysSettings", false);
-        addonSetUtils.createTextInput(addonInfo["id"], "auxKey1", "Extra Key 1", "The extra key that will show up on the overlay", "Key 1", "extraKeysSettings", false);
-        addonSetUtils.createTextInput(addonInfo["id"], "auxKey2", "Extra Key 2", "The extra key that will show up on the overlay", "Key 2", "extraKeysSettings", false);
+        addonSetUtils.createKeybindInput(addonInfo["id"], "forward", "Forward Key", "The Forward key that will show up on the overlay", "extraKeysSettings", false);
+        addonSetUtils.createKeybindInput(addonInfo["id"], "backward", "Backward Key", "The Backward key that will show up on the overlay", "extraKeysSettings", false);
+        addonSetUtils.createKeybindInput(addonInfo["id"], "left", "Left Key", "The Left key that will show up on the overlay", "extraKeysSettings", false);
+        addonSetUtils.createKeybindInput(addonInfo["id"], "right", "Right Key", "The Right key that will show up on the overlay", "extraKeysSettings", false);
+        addonSetUtils.createKeybindInput(addonInfo["id"], "auxKey1", "Extra Key 1", "The extra key that will show up on the overlay", "extraKeysSettings", false);
+        addonSetUtils.createKeybindInput(addonInfo["id"], "auxKey2", "Extra Key 2", "The extra key that will show up on the overlay", "extraKeysSettings", false);
 
         function openOriginal() {
             window.open("https://gist.github.com/KraXen72/2ea1332440b0c66b83ca9b73afc38269");
