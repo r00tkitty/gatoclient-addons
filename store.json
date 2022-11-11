@@ -4,7 +4,7 @@
       {
         "name": "Keystrokes Overlay",
         "id": "keystrokeOverlay",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/keystrokeOverlay.js",
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/keyboardoverlay.png?raw=true",
         "description": "Keyboard Overlay based off of the Crankshaft Keystrokes by KraXen72",
@@ -22,7 +22,7 @@
       {
         "name": "TwitchUtility",
         "id": "twitchUtility",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/twitchUtility.js",
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/twitchutility.png?raw=true",
         "description": "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
