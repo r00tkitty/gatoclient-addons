@@ -20,7 +20,7 @@ class gatoAddon {
         // REQUIRED
         addonSetUtils.addConfig(addonInfo["id"], "enabled", true);
         // Add your custom configuration options here
-        addonSetUtils.addConfig(addonInfo["id"], "zoomkey", "87");
+        addonSetUtils.addConfig(addonInfo["id"], "zoomkey", "67");
 
         addonSetUtils.addConfig(addonInfo["id"], "zoomamt", 2.5);
     }
