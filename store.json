@@ -36,6 +36,15 @@
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/inboxnotifier.png?raw=true",
         "description": "Shows a notification in game when you get a new message in your inbox",
         "isSocial": false
+      },
+      {
+        "name": "Optic Zoom",
+        "id": "opticZoom",
+        "version": "1.0.0",
+        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/opticZoom.js",
+        "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/opticzoom.png?raw=true",
+        "description": "Similar to Minecraft Optifine's zoom key, press a key to zoom in",
+        "isSocial": false
       }
     ]
   }
