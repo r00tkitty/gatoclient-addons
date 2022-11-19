@@ -15,6 +15,14 @@
     {
       "id": "gatoqt",
       "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatoqt.png?raw=true"
+    },
+    {
+      "id": "gatoVIP",
+      "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatovip.png?raw=true"
+    },
+    {
+      "id": "gatoPatreon",
+      "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatopatreon.png?raw=true"
     }
   ]
 }
