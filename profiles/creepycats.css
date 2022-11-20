@@ -13,7 +13,7 @@
 
 .profileTabs{
     outline:2px solid white!important;
-    border-radius:16px;
+    border-radius:16px!important;
     background-color:rgb(53 53 53 / 0.5);
 }
 
