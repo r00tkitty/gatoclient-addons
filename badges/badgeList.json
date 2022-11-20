@@ -23,6 +23,10 @@
     {
       "id": "gatoPatreon",
       "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatopatreon.png?raw=true"
+    },
+    {
+      "id": "gatoBoost",
+      "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatoboost.png?raw=true"
     }
   ]
 }
