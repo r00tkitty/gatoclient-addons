@@ -1,0 +1,204 @@
+/* ephemeral social. ashevoy.github.io */
+
+:root {
+    /* This is the background that will show up behind your user info*/
+    --background-url: url("https://cdn.discordapp.com/attachments/628964831529140254/1045665219206201375/IMG_20221125_12390841.jpg");
+
+    /* Radius of corners */
+    --corner-radius: 0px;
+
+    /* Window Background Color */
+    --bg-color:white;
+
+    /* Window Outline Color */
+    --outline-color:black;
+}
+/* Only Modify Below Stuff if you Want a Unique CSS*/
+
+@font-face {
+  font-family: gamefont;
+  src: url(https://ashevoy.github.io/font.ttf);
+}
+
+* {
+  font-family: gamefont;
+}
+
+#backgroundImage{
+    /* Background Image */
+    background-image:var(--background-url)!important;
+    background-size: cover!important;
+    background-size:100% 100%;
+    opacity:1;
+}
+
+.scrollItemNew {
+    /* Each Element on the main profile will have this background color and outline */
+    background-color:var(--bg-color);
+    border-radius:var(--corner-radius);
+
+    /* Removes the shadow */
+    -webkit-box-shadow:0 0px 0 0 #494949;-moz-box-shadow:0 0px 0 0 #494949;box-shadow:0 0px 0 0 #494949;
+}
+
+.profileTabs{
+    background-color:var(--bg-color);
+}
+
+a {
+    color: black!important;
+}
+
+#nameSwitch {
+    cursor: pointer;
+    pointer-events: all;
+    color: rgba(0,0,0);
+}
+
+.leftMidHolder {
+    color: black;
+}
+
+.leftMidHolder span {
+    color: black!important;
+}
+
+#followerC {
+    color: black;
+}
+
+.follL {
+    color: black;
+}
+
+.follCount {
+    color: black;
+}
+
+.profileNav {
+    filter: drop-shadow(11px 8px 0px #1ae6a1) drop-shadow(2px 4px 6px black);
+    margin-top: 0px;
+    margin-bottom: 35px;
+}
+
+.scrollItemNew {
+    filter: drop-shadow(8px 8px 0px #1ae6a1) drop-shadow(2px 4px 6px black);
+}
+
+.profileTab {
+    color: black;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.profileTab:hover {
+    color: #fff;
+    background: #000;
+}
+
+#tradeBtn:after {
+    content: " (unlikely to accept)";
+}
+
+.pSt {
+    font-size: 15px;
+    color: #000;
+    border: 0px solid rgba(0,0,0,0);
+    background-color: rgba(0,0,0,0);
+    text-shadow: none!important;
+}
+
+.pSt strong {
+    color: #000;
+    font-size: 18px;
+    text-shadow: none;
+}
+
+.bigMenTabs {
+    background-color: transparent!important;
+}
+
+.bigMenTab {
+    color: #000;
+    font-size: 20px!important;
+    text-transform: uppercase;
+}
+
+.bigMenTab:hover {
+    color: #fff;
+    background: #000;
+}
+
+.classCard {
+  text-shadow: none;
+  background-color: transparent;
+}
+
+.className {
+  color: #000;
+  font-size: 20px;
+}
+
+.classWeap {
+    color: #000;
+    font-size: 15px;
+}
+
+.classLvl {
+    color: #000;
+    background: #fff;
+    font-size: 20px;
+}
+
+.scrollItemHead {
+    font-family: gamefont;
+    text-transform: uppercase;
+    color: black;
+}
+
+.graphHeader {
+  background-color: #1ae6a1
+}
+
+.xpBar {
+  background-color: #000;
+  border-radius: 0px;
+  height: 33px;
+  padding: 1px;
+}
+
+.xpBarB {
+    height: 100%;
+    background-image: linear-gradient(to right,#1ae6a1 30%,#FED0EA 70%);
+}
+
+.xpBarV {
+    text-shadow: none;
+}
+
+.cardAction {
+    color: rgba(255,255,255,.85)!important;
+}
+
+.cardActions {
+  background: #1ae6a13d;
+}
+
+.marketCard {
+    background-color: #fed0ea;
+}
+
+.marketCard:hover {
+    background-color: #fff;
+}
+
+.marketPrice {
+    background: transparent;
+    font-size: 25px;
+    text-shadow: 3px 4px 5px #000, -2px -1px 5px #000, -2px 4px 5px #000, 3px -1px 5px #000;
+}
+
+.marketPrice span {
+    color: #1ae6a1!important;
+    font-size: 15px;
+}
