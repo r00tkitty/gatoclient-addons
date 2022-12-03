@@ -45,6 +45,15 @@
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/opticzoom.png?raw=true",
         "description": "Similar to Minecraft Optifine's zoom key, press a key to zoom in",
         "isSocial": false
+      },
+      {
+        "name": "Alternate Account Manager",
+        "id": "altManager",
+        "version": "1.0.0",
+        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/altManager.js",
+        "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/altmng.png?raw=true",
+        "description": "Alternate Account Manager allows you to switch accounts. Based on LaF",
+        "isSocial": false
       }
     ]
   }
