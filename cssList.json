@@ -1,12 +1,8 @@
-{
-  "cssList": {
-    "css": [
-      {
-        "name": "Ephemeral",
-        "id": "ephemeral",
-        "author": "ashevoy/dj62",
-        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/css/ephemeral.css",
-      }
-    ]
+[
+  {
+    "name": "Ephemeral",
+    "id": "ephemeral",
+    "author": "ashevoy/dj62",
+    "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/css/ephemeral.css",
   }
-}
+]
