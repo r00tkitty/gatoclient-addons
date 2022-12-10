@@ -22,7 +22,7 @@
       "author": "LukeTheDuke",
       "fileLink":"https://rawcdn.githack.com/creepycats/gatoclient-addons/7f5b0db5c7f7f1a297465f735eff2944ed5e695d/css/panda.css",
       "thumbnail":"https://media.discordapp.net/attachments/901905234861883432/1051243280098136114/menu.png",
-      "ignoreFilter":"--yellow,--blue,--green,--red"
+      "ignoreFilter":"--yellow,--blue,--green,--red,--circle-mask"
     }
   ]
 }
