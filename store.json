@@ -13,7 +13,7 @@
       {
         "name": "Better Matchmaker +",
         "id": "betterMatchmaker",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/betterMatchmaker.js",
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/bettermatchmaker.png?raw=true",
         "description": "Completely Overhauls Matchmaker to be Fully Customizable",
