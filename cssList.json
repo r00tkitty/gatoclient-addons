@@ -4,7 +4,7 @@
       "name": "Default CSS",
       "id": "default",
       "author": "Krunker.io",
-      "fileLink":"none",
+      "fileLink":"",
       "thumbnail":"https://images.crazygames.com/games/krunker-io/cover-1591336739727.png"
     },
     {
@@ -13,13 +13,6 @@
       "author": "ashevoy/dj62",
       "fileLink":"https://rawcdn.githack.com/creepycats/gatoclient-addons/6c78ef15f4d3f3c894508666fa7edca8280f8bf9/css/ephemeral.css",
       "thumbnail":"https://media.discordapp.net/attachments/1041547592548495381/1050982774728835122/IMG_20221210_045008.png"
-    },
-    {
-      "name": "Default CSS 2",
-      "id": "default2",
-      "author": "Krunker.io",
-      "fileLink":"none",
-      "thumbnail":"https://images.crazygames.com/games/krunker-io/cover-1591336739727.png"
     }
   ]
 }
