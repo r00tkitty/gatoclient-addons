@@ -5,14 +5,24 @@
       "id": "default",
       "author": "Krunker.io",
       "fileLink":"",
-      "thumbnail":"https://images.crazygames.com/games/krunker-io/cover-1591336739727.png"
+      "thumbnail":"https://images.crazygames.com/games/krunker-io/cover-1591336739727.png",
+      "ignoreFilter":""
     },
     {
       "name": "Ephemeral",
       "id": "ephemeral",
       "author": "ashevoy/dj62",
       "fileLink":"https://rawcdn.githack.com/creepycats/gatoclient-addons/6c78ef15f4d3f3c894508666fa7edca8280f8bf9/css/ephemeral.css",
-      "thumbnail":"https://media.discordapp.net/attachments/1041547592548495381/1050982774728835122/IMG_20221210_045008.png"
+      "thumbnail":"https://media.discordapp.net/attachments/1041547592548495381/1050982774728835122/IMG_20221210_045008.png",
+      "ignoreFilter":""
+    },
+    {
+      "name": "Panda",
+      "id": "panda",
+      "author": "LukeTheDuke",
+      "fileLink":"https://rawcdn.githack.com/creepycats/gatoclient-addons/7f5b0db5c7f7f1a297465f735eff2944ed5e695d/css/panda.css",
+      "thumbnail":"https://media.discordapp.net/attachments/901905234861883432/1051243280098136114/menu.png",
+      "ignoreFilter":"--yellow,--blue,--green,--red"
     }
   ]
 }
