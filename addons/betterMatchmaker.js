@@ -6,8 +6,10 @@ const addonInfo = {
     description: "Completely Overhauls Matchmaker to be Fully Customizable",
     isSocial: false // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
-var addonSetUtils;
-var notificationUtils;
+const path = require('path');
+const addonSettingsUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/addonUtils');
+const addonSetUtils = new addonSettingsUtils();
+const notificationUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/notificationUtils');
 
 const MODES = {
     ffa: 0,
@@ -81,8 +83,7 @@ class gatoAddon {
         return addonInfo[infoName];
     }
     // Create your inital configurations here
-    static firstTimeSetup(dependencies) {
-        addonSetUtils = new dependencies[0]();
+    static firstTimeSetup() {
         // REQUIRED
         addonSetUtils.addConfig(addonInfo["id"], "enabled", true);
         // Add your custom configuration options here
@@ -96,10 +97,7 @@ class gatoAddon {
     }
 
     // Runs when page starts loading
-    static initialize(dependencies) {
-        addonSetUtils = new dependencies[0]();
-        notificationUtils = dependencies[2];
-
+    static initialize() {
         console.log("BetterMatchmaker Running");
         if (addonSetUtils.getConfig(addonInfo["id"], "fix") != true) {
             Object.keys(MODES).forEach(function (key) {
@@ -241,8 +239,7 @@ class gatoAddon {
     }
 
     // Loads Addons Settings to Configuration Window
-    static loadAddonSettings(dependencies) {
-        addonSetUtils = new dependencies[0]();
+    static loadAddonSettings() {
         addonSetUtils.createForm(addonInfo["id"]);
 
         addonSetUtils.createCategory("addonSettings", "Addon Settings");
