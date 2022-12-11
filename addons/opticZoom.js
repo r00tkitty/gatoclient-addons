@@ -1,14 +1,12 @@
 const addonInfo = {
     name: "Optic Zoom",  // Addon Name
     id: "opticZoom",     // Addon ID (Referenced by save data)
-    version: "1.0.0",        // Version
+    version: "1.0.1",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/opticzoom.png?raw=true",           // Thumbnail URL
     description: "Similar to Minecraft Optifine's zoom key, press a key to zoom in",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
-const addonSettingsUtils = require(require('path').resolve('./') + '/resources/app.asar/app/utils/addonUtils');
-const { keyFromCode } = require(require('path').resolve('./') + '/resources/app.asar/app/utils/utils');
-const addonSetUtils = new addonSettingsUtils();
+var addonSetUtils;
 
 class gatoAddon {
     // Fetch Function - DO NOT REMOVE
@@ -16,43 +14,46 @@ class gatoAddon {
         return addonInfo[infoName];
     }
     // Create your inital configurations here
-    static firstTimeSetup() {
+    static firstTimeSetup(dependencies) {
+        addonSetUtils = new dependencies[0]();
         // REQUIRED
         addonSetUtils.addConfig(addonInfo["id"], "enabled", true);
         // Add your custom configuration options here
-        addonSetUtils.addConfig(addonInfo["id"], "zoomkey", "67");
+        addonSetUtils.addConfig(addonInfo["id"], "zoomkey", "87");
 
         addonSetUtils.addConfig(addonInfo["id"], "zoomamt", 2.5);
     }
 
     // Runs when page starts loading
-    static initialize() {
+    static initialize(dependencies) {
+        addonSetUtils = new dependencies[0]();
         console.log("opticZoom Running");
     }
 
     // Runs when page fully loaded
     static domLoaded() {
+
+    }
+
+    // Runs when Game fully loaded
+    static gameLoaded() {
         var canvases = [];
-        var observer = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
-                if (mutation.type === 'attributes') {
-                    document.addEventListener("keydown", handleKeyDown)
-                    document.addEventListener("keyup", handleKeyUp)
-                    canvases = Array.from(document.getElementsByTagName('canvas'));
-                    canvases.forEach(element => element.addEventListener("mousedown", handleMouseDown));
-                    document.addEventListener("mouseup", handleMouseUp);
-                    observer.disconnect();
-                }
-            });
-        });
-        let loadingBg = document.getElementById("loadingBg")
-        observer.observe(loadingBg, { attributes: true });
 
         const zoomMult = addonSetUtils.getConfig(addonInfo["id"], "zoomamt")
         const zoomKey = addonSetUtils.getConfig(addonInfo["id"], "zoomkey")
 
         let css = `
-        .gatoZoom{transform:scale(${zoomMult})}
+        .gatoZoom{width:calc(100% * ${zoomMult})!important;height:calc(100% * ${zoomMult})!important;}
+        .zoomTrans{
+            image-rendering: -moz-crisp-edges!important;
+            image-rendering: -webkit-crisp-edges!important;
+            image-rendering: pixelated!important;
+            transition:all 0.25s ease-in-out!important;
+            position:absolute;
+            top:calc(50%)!important;
+            left:calc(50%)!important;
+            transform: translate(-50%, -50%);
+        }
         `
 
         const injectSettingsCss = (css, classId = "opticzoom-css") => {
@@ -86,6 +87,7 @@ class gatoAddon {
                         if (String(kC).substring(0, 1) != "M" && String(event.keyCode) === String(kC)) {
                             //canvases.forEach(element => element.classList.add("gatoZoom"));
                             canvases[4].classList.add("gatoZoom")
+                            canvases[0].classList.add("gatoZoom")
                         }
                     }
             }
@@ -108,6 +110,7 @@ class gatoAddon {
                         if (String(kC).substring(0, 1) != "M" && String(event.keyCode) === String(kC)) {
                             //canvases.forEach(element => element.classList.remove("gatoZoom"));
                             canvases[4].classList.remove("gatoZoom")
+                            canvases[0].classList.remove("gatoZoom")
                         }
                     }
             }
@@ -156,6 +159,15 @@ class gatoAddon {
                     }
             }
         }
+        
+        document.addEventListener("keydown", handleKeyDown)
+        document.addEventListener("keyup", handleKeyUp)
+        canvases = Array.from(document.getElementsByTagName('canvas'));
+        canvases.forEach(element => element.addEventListener("mousedown", handleMouseDown));
+        document.addEventListener("mouseup", handleMouseUp);
+
+        canvases[4].classList.add("zoomTrans")
+        canvases[0].classList.add("zoomTrans")
     }
 
     // Runs when settings update
@@ -163,6 +175,7 @@ class gatoAddon {
         const zoomMult = addonSetUtils.getConfig(addonInfo["id"], "zoomamt")
         let css = `
         .gatoZoom{transform:scale(${zoomMult})}
+        .zoomTrans{transition:transform 0.25s ease-in-out}
         `
 
         const injectSettingsCss = (css, classId = "opticzoom-css") => {
@@ -177,7 +190,8 @@ class gatoAddon {
     }
 
     // Loads Addons Settings to Configuration Window
-    static loadAddonSettings() {
+    static loadAddonSettings(dependencies) {
+        addonSetUtils = new dependencies[0]();
         addonSetUtils.createForm(addonInfo["id"]);
 
         addonSetUtils.createCategory("addonSettings", "Addon Settings");
