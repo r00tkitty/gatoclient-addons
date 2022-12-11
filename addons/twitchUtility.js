@@ -1,22 +1,21 @@
 const addonInfo = {
     name: "TwitchUtility",  // Addon Name
     id: "twitchUtility",     // Addon ID (Referenced by save data)
-    version: "1.0.3",        // Version
+    version: "1.0.4",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/twitchutility.png?raw=true",           // Thumbnail URL
     description: "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
-const path = require('path');
+//const path = require('path');
 const { shell } = require('electron');
-const fetch = (...args) => import(path.resolve('./') + '/resources/app.asar/node_modules/node-fetch').then(({ default: fetch }) => fetch(...args));
+const fetch = window.fetch;//(...args) => import(path.resolve('./') + '/resources/app.asar/node_modules/node-fetch').then(({ default: fetch }) => fetch(...args));
 const { createServer } = require('http');
 const { ifError } = require('assert');
-const addonSettingsUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/addonUtils');
-const notificationUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/notificationUtils');
-const addonSetUtils = new addonSettingsUtils();
+var notificationUtils;
+var addonSetUtils;
 const client_id = "omnaylafso0f3fdtzwrwk5qdb24km9";
-const tmi = require(path.resolve('./') + '/resources/app.asar/node_modules/tmi.js/');
-const emoteParser = require(path.resolve('./') + '/resources/app.asar/node_modules/tmi-emote-parse');
+var tmi;
+var emoteParser;
 
 class gatoAddon {
     // Fetch Function - DO NOT REMOVE
@@ -24,7 +23,8 @@ class gatoAddon {
         return addonInfo[infoName];
     }
     // Create your inital configurations here
-    static firstTimeSetup() {
+    static firstTimeSetup(dependencies) {
+        addonSetUtils = new dependencies[0]();
         // REQUIRED
         addonSetUtils.addConfig(addonInfo["id"], "enabled", true);
         // Add your custom configuration options here
@@ -42,8 +42,11 @@ class gatoAddon {
     }
 
     // Runs when page starts loading
-    static initialize() {
-
+    static initialize(dependencies) {
+        addonSetUtils = new dependencies[0]();
+        notificationUtils = dependencies[2];
+        tmi = dependencies[3];
+        emoteParser = dependencies[4];
     }
 
     // Runs when page fully loaded
@@ -284,7 +287,8 @@ class gatoAddon {
     }
 
     // Loads Addons Settings to Configuration Window
-    static loadAddonSettings(loadedAddons) {
+    static loadAddonSettings(dependencies) {
+        addonSetUtils = new dependencies[0]();
         addonSetUtils.createForm(addonInfo["id"]);
 
         addonSetUtils.createCategory("addonSettings", "Addon Settings");
