@@ -8,8 +8,8 @@ PANDA CSS COPYRIGHT LUKETHEDUKE#7313
     --menu-girl: url(https://luketheduke.xyz/assets/p1/menu.png);
     --game-girl: url(https://luketheduke.xyz/assets/p1/game.png);
 
-    --accent-color: black;
-    --accent-color-2: white;
+    --accent-color: #000000;
+    --accent-color-2: #FFFFFF;
 
     --yellow: var(--accent-color);
     --blue: var(--accent-color);
