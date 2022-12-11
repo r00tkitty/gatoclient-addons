@@ -1,15 +1,13 @@
 const addonInfo = {
     name: "Live Inbox Notifications",  // Addon Name
     id: "inboxNotifier",     // Addon ID (Referenced by save data)
-    version: "1.0.1",        // Version
+    version: "1.0.2",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/inboxnotifier.png?raw=true",           // Thumbnail URL
     description: "Shows a notification in game when you get a new message in your inbox",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
-const path = require('path');
-const addonSettingsUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/addonUtils');
-const addonSetUtils = new addonSettingsUtils();
-const notificationUtils = require(path.resolve('./') + '/resources/app.asar/app/utils/notificationUtils');
+var addonSetUtils;
+var notificationUtils;
 
 class gatoAddon {
     // Fetch Function - DO NOT REMOVE
@@ -17,7 +15,8 @@ class gatoAddon {
         return addonInfo[infoName];
     }
     // Create your inital configurations here
-    static firstTimeSetup() {
+    static firstTimeSetup(dependencies) {
+        addonSetUtils = new dependencies[0]();
         // REQUIRED
         addonSetUtils.addConfig(addonInfo["id"], "enabled", true);
         // Add your custom configuration options here
@@ -29,8 +28,9 @@ class gatoAddon {
     }
 
     // Runs when page starts loading
-    static initialize() {
-
+    static initialize(dependencies) {
+        addonSetUtils = new dependencies[0]();
+        notificationUtils = dependencies[2];
     }
 
     // Runs when page fully loaded
@@ -112,13 +112,19 @@ class gatoAddon {
         }
     }
 
+    // Runs when Game fully loaded
+    static gameLoaded() {
+        
+    }
+
     // Runs when settings update
     static updateSettings() {
 
     }
 
     // Loads Addons Settings to Configuration Window
-    static loadAddonSettings() {
+    static loadAddonSettings(dependencies) {
+        addonSetUtils = new dependencies[0]();
         addonSetUtils.createForm(addonInfo["id"]);
 
         addonSetUtils.createCategory("addonSettings", "Addon Settings");
