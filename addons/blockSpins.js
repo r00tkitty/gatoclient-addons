@@ -2,7 +2,7 @@ const addonInfo = {
   name: 'Block Spins', // Addon Name
   id: 'blockSpins', // Addon ID (Referenced by save data)
   version: '1.0.0', // Version
-  thumbnail:'https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/spinblock.png?raw=true', // Thumbnail URL
+  thumbnail:'https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/opticzoom.png?raw=true', // Thumbnail URL
   description: 'A great way to fight your spinning addiction!',
   isSocial: false // UNSUPPORTED - Maybe a future Krunker Hub addon support
 };
