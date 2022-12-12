@@ -59,6 +59,7 @@
         "name": "Block Spins",
         "id": "blockSpins",
         "version": "1.0.0",
+        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/blockSpins.js",
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/opticzoom.png?raw=true",
         "description": "A great way to fight your spinning addiction!",
         "isSocial": false
