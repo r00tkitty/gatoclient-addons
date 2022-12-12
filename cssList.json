@@ -23,6 +23,14 @@
       "fileLink":"https://rawcdn.githack.com/creepycats/gatoclient-addons/6765a375c9ca09e936863bf55a32a48eec9cc6e6/css/panda.css",
       "thumbnail":"https://media.discordapp.net/attachments/901905234861883432/1051243280098136114/menu.png",
       "ignoreFilter":"--yellow,--blue,--green,--red,--circle-mask"
+    },
+    {
+      "name": "MOF1 v2.2",
+      "id": "mof1",
+      "author": "MOF1 CL4N",
+      "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/css/mof1-fork.css",
+      "thumbnail":"https://i.ytimg.com/vi/IbyWouLoxOY/maxresdefault.jpg",
+      "ignoreFilter":""
     }
   ]
 }
