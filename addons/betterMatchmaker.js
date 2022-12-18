@@ -1,7 +1,7 @@
 const addonInfo = {
     name: "Better Matchmaker +", // Addon Name
     id: "betterMatchmaker", // Addon ID (Referenced by save data)
-    version: "1.0.5", // Version
+    version: "1.0.6", // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/bettermatchmaker.png?raw=true", // Thumbnail URL
     description: "Completely Overhauls Matchmaker to be Fully Customizable",
     isSocial: false // UNSUPPORTED - Maybe a future Krunker Hub addon support
@@ -41,7 +41,8 @@ const MODES = {
     tdf: 28,
     depoffa: 29,
     chs: 33,
-    bhffa: 34
+    bhffa: 34,
+    gdepo: 36
 };
 const REGIONS = {
     "us-nj": "New York",
