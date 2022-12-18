@@ -17,11 +17,12 @@
 
 @font-face {
   font-family: gamefont;
-  src: url(https://ashevoy.github.io/font.ttf);
+  src: url(https://ashevoy.github.io/fontvariable.ttf);
 }
 
 * {
   font-family: gamefont;
+  font-variation-settings: 'wght' 600;
 }
 
 #backgroundImage{
@@ -73,12 +74,20 @@ a {
 
 .follCount {
     color: black;
+    font-size: 17px;
+    text-transform: lowercase;
+    top: 2px;
+}
+
+.leftBottomHolder {
+    font-size: 20px!important;
 }
 
 .profileNav {
-    filter: drop-shadow(11px 8px 0px #1ae6a1) drop-shadow(2px 4px 6px black);
-    margin-top: 0px;
-    margin-bottom: 35px;
+    filter: drop-shadow(8px 8px 0px #1ae6a1) drop-shadow(2px 4px 6px black);
+    margin-top: -20px;
+    margin-bottom: 25px;
+    border-radius: 0px;
 }
 
 .scrollItemNew {
@@ -96,8 +105,47 @@ a {
     background: #000;
 }
 
+div#giftBtn:hover {
+    transform: scale(1);
+    background-color: #1ae6a1!important;
+    filter: none;
+}
+
+div#giftBtn {
+    color: white;
+    background-color: #FED0EA;
+    border: none;
+    text-shadow: 1px 1px 0 #ff8ece, -1px -1px 0 #ff8ece, -1px 1px 0 #ff8ece, 1px -1px 0 #ff8ece;
+}
+
+#tradeBtn:hover {
+    transform: scale(1);
+    background-color: #1ae6a1!important;
+    filter: none;
+}
+
+#tradeBtn {
+    color: white;
+    background-color: #FED0EA;
+    border: none;
+    text-shadow: 1px 1px 0 #ff8ece, -1px -1px 0 #ff8ece, -1px 1px 0 #ff8ece, 1px -1px 0 #ff8ece;
+}
+
 #tradeBtn:after {
     content: " (unlikely to accept)";
+}
+
+#followBtn:hover {
+    transform: scale(1);
+    background-color: #1ae6a1!important;
+    filter: none;
+}
+
+#followBtn {
+    color: white;
+    background-color: #FED0EA;
+    border: none;
+    text-shadow: 1px 1px 0 #ff8ece, -1px -1px 0 #ff8ece, -1px 1px 0 #ff8ece, 1px -1px 0 #ff8ece;
 }
 
 .pSt {
@@ -112,6 +160,7 @@ a {
     color: #000;
     font-size: 18px;
     text-shadow: none;
+    font-variation-settings: 'wght' 747;
 }
 
 .bigMenTabs {
@@ -167,17 +216,36 @@ a {
   padding: 1px;
 }
 
+.clsXPBarC {
+    background-image: linear-gradient(to right,#1ae6a1 30%,#FED0EA 70%);
+}
+
+.clsXPBarV {
+    letter-spacing: -1.4px;
+    font-size: 16px;
+    top: 2px;
+    text-shadow: 1px 1px 0 #ff8ece, -1px -1px 0 #ff8ece, -1px 1px 0 #ff8ece, 1px -1px 0 #ff8ece;
+}
+
 .xpBarB {
     height: 100%;
     background-image: linear-gradient(to right,#1ae6a1 30%,#FED0EA 70%);
 }
 
 .xpBarV {
-    text-shadow: none;
+    font-size: 20px;
+    font-variation-settings: "wght" 747;
+    top: 6px;
+    color: white;
+    text-shadow: 1px 1px 0 #ff8ece, -1px -1px 0 #ff8ece, -1px 1px 0 #ff8ece, 1px -1px 0 #ff8ece;
 }
 
 .cardAction {
     color: rgba(255,255,255,.85)!important;
+}
+
+#profSales {
+    filter: hue-rotate(220deg) brightness(1.2) saturate(0.8);
 }
 
 .cardActions {
@@ -201,4 +269,68 @@ a {
 .marketPrice span {
     color: #1ae6a1!important;
     font-size: 15px;
+}
+
+#shareBtn {
+    color: #1ae6a1!important;
+}
+
+#shareBtn:hover {
+    transform: scale(1);
+    filter: none;
+    color: #FED0EA!important;
+}
+
+#reprtBtn {
+    color: #FED0EA!important;
+}
+
+#reprtBtn:hover {
+    color: #1ae6a1!important;
+    filter: none;
+    transform: scale(1);
+}
+
+#twitchBtn {
+    filter: hue-rotate(49deg) brightness(7.8) saturate(155%);
+}
+
+#twitchBtn:hover {
+    filter: hue-rotate(-117deg) brightness(4) saturate(47%) contrast(1)!important;
+    transform: scale(1);
+}
+
+.flag-icon {
+    background-image: url(https://cdn.discordapp.com/attachments/628964831529140254/1053324178796855296/tran.png);
+}
+
+@keyframes rayntext {
+    0%, 200% {
+        background-position: 0 0;
+    }
+    99.9999999999999999999999999999999% {
+        background-position: -130% 0;
+    }
+}
+
+.leftTopHolder a {
+    background-image: linear-gradient(to right, #1ae6a1,#FED0EA,#7ddef6);
+    animation: rayntext 3s cubic-bezier(0.07, 2.37, 0.93, -0.88) infinite;
+    background-size: 400% 100%;
+    color: transparent !important;
+    -webkit-background-clip: text;
+    animation-direction: alternate;
+}
+
+.leftTopHolder {
+    font-size: 25px;
+    transform: translate(-97px, 0px);
+    clip-path: polygon(40% 0, 100% 0%, 100% 100%, 40% 100%);
+    transition: clip-path 200ms ease, -webkit-clip-path 200ms ease, transform 200ms ease;
+}
+
+.leftTopHolder:hover {
+    transform: translate(0px, 0px);
+    clip-path: polygon(0 0, 100% 0, 100% 95px, 0 95px);
+    transition: clip-path 200ms ease, -webkit-clip-path 200ms ease, transform 200ms ease;
 }
