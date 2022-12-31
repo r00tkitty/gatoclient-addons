@@ -5,18 +5,6 @@
       "image":"https://cdn.discordapp.com/attachments/901905234861883432/1058833945870991391/9k.png",
       "desc":"Client Creator, Go Follow My Twitch!",
       "link":"https://www.twitch.tv/creepycats"
-    },
-    {
-      "name":"Partner B",
-      "image":"./img/player_pfp.png",
-      "desc":"Dummy Text B",
-      "link":"https://twitter.com/?lang=en"
-    },
-    {
-      "name":"Partner C",
-      "image":"./img/player_pfp.png",
-      "desc":"Dummy Text C",
-      "link":"youtube.com"
     }
   ]
 }
