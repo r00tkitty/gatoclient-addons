@@ -1,0 +1,28 @@
+{
+  "partners":[
+    {
+      "name":"Partner A",
+      "image":"./img/player_pfp.png",
+      "desc":"Dummy Text A",
+      "link":"twitter.com/?lang=en"
+    },
+    {
+      "name":"Partner B",
+      "image":"./img/player_pfp.png",
+      "desc":"Dummy Text B",
+      "link":"twitter.com/?lang=en"
+    },
+    {
+      "name":"Partner C",
+      "image":"./img/player_pfp.png",
+      "desc":"Dummy Text C",
+      "link":"twitter.com/?lang=en"
+    },
+    {
+      "name":"Partner D",
+      "image":"./img/player_pfp.png",
+      "desc":"Dummy Text D",
+      "link":"twitter.com/?lang=en"
+    }
+  ]
+}
