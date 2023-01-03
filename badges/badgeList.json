@@ -27,6 +27,10 @@
     {
       "id": "gatoBoost",
       "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatoboost.png?raw=true"
+    },
+    {
+      "id": "gatoFurry",
+      "url": "https://github.com/creepycats/gatoclient-addons/blob/main/badges/img/gatofurry.png?raw=true"
     }
   ]
 }
