@@ -72,15 +72,6 @@
         "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/mapTweaks.png?raw=true",
         "description": "Skycolor, Skyimage, Ambient Colors, and Custom Billboards from Gatoclient-Legacy",
         "isSocial": false
-      },
-      {
-        "name": "Trickshot Assist",
-        "id": "trickshotAssist",
-        "version": "1.0.0",
-        "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/addons/trickshotAssist.js",
-        "thumbnail": "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/trickshotAssist.png?raw=true",
-        "description": "Use buttons to turn left/right. Original by Ectryliz. NOT AIMBOT",
-        "isSocial": false
       }
     ]
   }
