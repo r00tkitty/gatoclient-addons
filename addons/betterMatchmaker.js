@@ -1,7 +1,7 @@
 const addonInfo = {
     name: "Better Matchmaker +", // Addon Name
     id: "betterMatchmaker", // Addon ID (Referenced by save data)
-    version: "1.0.6", // Version
+    version: "1.0.7", // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/bettermatchmaker.png?raw=true", // Thumbnail URL
     description: "Completely Overhauls Matchmaker to be Fully Customizable",
     isSocial: false // UNSUPPORTED - Maybe a future Krunker Hub addon support
@@ -155,13 +155,7 @@ class gatoAddon {
                 var resGL = await fetch(`https://matchmaker.krunker.io/game-list?hostname=${window.location.hostname}`)
                     .then(_ => _.json());
 
-                let myRegion = null;
-                //if (addonSetUtils.getConfig(addonInfo["id"], "joinCurrentRegion")) {
-                //    myRegion = new RegExp(`${addonSetUtils.getConfig(addonInfo["id"], "lastRegion")}:.+`);
-                //} else {
-                    myRegion = new RegExp(/.+:.+/);
-                //}
-                var gameList = resGL.games.filter(game => game[2] < game[3] && (addonSetUtils.getConfig(addonInfo["id"], "ignoreEmpty") ? game[2] > 0 : game[2] < game[3]) && game[0] != addonSetUtils.getConfig(addonInfo["id"], "lastCode") && game[4].v === JSON.parse(version).v && (addonSetUtils.getConfig(addonInfo["id"], "ignoreLate") ? game[5] > 60 : true) && (addonSetUtils.getConfig(addonInfo["id"], "joinCurrentRegion") != true && allowedRegions.length > 0 ? allowedRegions.includes(game[1]) : myRegion.test(game[0])) && (allowedModes.includes(game[4].g)) && (addonSetUtils.getConfig(addonInfo["id"], "joinMatchCustom") ? game[4].c : !game[4].c) && (addonSetUtils.getConfig(addonInfo["id"], "joinMatchOCustom") ? game[4].oc : !game[4].oc));
+                var gameList = resGL.games.filter(game => game[2] < game[3] && (addonSetUtils.getConfig(addonInfo["id"], "ignoreEmpty") ? game[2] > 0 : game[2] < game[3]) && game[0] != addonSetUtils.getConfig(addonInfo["id"], "lastCode") && game[4].v === JSON.parse(version).v && (addonSetUtils.getConfig(addonInfo["id"], "ignoreLate") ? game[5] > 60 : true) && (allowedRegions.includes(game[1])) && (allowedModes.includes(game[4].g)) && (addonSetUtils.getConfig(addonInfo["id"], "joinMatchCustom") ? game[4].c : !game[4].c) && (addonSetUtils.getConfig(addonInfo["id"], "joinMatchOCustom") ? game[4].oc : !game[4].oc));
 
                 if (!gameList.length) {
                     alert('Better Matchmaker: No valid games found. Try again later');
