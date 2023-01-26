@@ -31,6 +31,14 @@
       "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/css/mof1-fork.css",
       "thumbnail":"https://i.ytimg.com/vi/IbyWouLoxOY/maxresdefault.jpg",
       "ignoreFilter":""
+    },
+    {
+      "name": "Keystrokes: Modern",
+      "id": "keys_modern",
+      "author": "Serpent Client",
+      "fileLink":"https://raw.githubusercontent.com/creepycats/gatoclient-addons/main/css/serpentkeys.css",
+      "thumbnail":"",
+      "ignoreFilter":""
     }
   ]
 }
