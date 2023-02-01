@@ -1,7 +1,7 @@
 const addonInfo = {
     name: "Live Inbox Notifications",  // Addon Name
     id: "inboxNotifier",     // Addon ID (Referenced by save data)
-    version: "1.0.2",        // Version
+    version: "1.0.3",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/inboxnotifier.png?raw=true",           // Thumbnail URL
     description: "Shows a notification in game when you get a new message in your inbox",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
@@ -25,6 +25,11 @@ class gatoAddon {
         addonSetUtils.addConfig(addonInfo["id"], "hub", true);
         addonSetUtils.addConfig(addonInfo["id"], "inbox", true);
         addonSetUtils.addConfig(addonInfo["id"], "misc", true);
+
+        addonSetUtils.addConfig(addonInfo["id"], "followerSound", true);
+        addonSetUtils.addConfig(addonInfo["id"], "hubSound", true);
+        addonSetUtils.addConfig(addonInfo["id"], "giftSound", true);
+        addonSetUtils.addConfig(addonInfo["id"], "miscSound", true);
     }
 
     // Runs when page starts loading
@@ -47,6 +52,14 @@ class gatoAddon {
         observer.observe(loadingBg, { attributes: true });
         var oldWindowData = [];
         var hasDoneTooMany = false;
+        var followerSound = new Audio('https://github.com/r00tkitty/files/blob/main/follower.mp3?raw=true');
+        var hubSound = new Audio('https://github.com/r00tkitty/files/blob/main/hub.mp3?raw=true');
+        var giftSound = new Audio('https://github.com/r00tkitty/files/blob/main/gift.mp3?raw=true');
+        var miscSound = new Audio('https://github.com/r00tkitty/files/blob/main/misc.mp3?raw=true');
+
+
+
+
         async function checkNotifs(args) {
             if (args[1].length > 0 && args[0] != 4) {
                 var filteredArgs = [];
@@ -69,24 +82,34 @@ class gatoAddon {
                             title = "New Follower";
                             notifContent = msgData["km_link"] + " has followed you";
                             classified = true;
+                            if (addonSetUtils.getConfig(addonInfo["id"], "followerSound") == true){
+                            followerSound.play();}
                         }
                         if (msgSubject.includes("sent you") && addonSetUtils.getConfig(addonInfo["id"], "inbox")) {
                             title = "You received a gift!";
                             notifContent = msgSubject;
                             classified = true;
+                            if (addonSetUtils.getConfig(addonInfo["id"], "inboxSound") == true){
+                                giftSound.play();}
                         }
                         if (msgSubject === "Craft order" && addonSetUtils.getConfig(addonInfo["id"], "inbox")) {
                             title = "Your Item is Crafted!";
                             notifContent = "Your item is finished crafting!";
                             classified = true;
+                            if (addonSetUtils.getConfig(addonInfo["id"], "inboxSound") == true){
+                                giftSound.play();}
                         }
                         if (msgSubject === "New Comment" && addonSetUtils.getConfig(addonInfo["id"], "hub")) {
                             title = "New Comment";
                             notifContent = "Someone has commented on your post";
                             classified = true;
+                            if (addonSetUtils.getConfig(addonInfo["id"], "hubSound") == true){
+                                hubSound.play();}
                         }
                         if(classified || addonSetUtils.getConfig(addonInfo["id"], "misc")){
                             notificationUtils.createNotif("email", title, notifContent, "#42d12c", 3000);
+                            if (addonSetUtils.getConfig(addonInfo["id"], "miscSound") == true && !classified){
+                                miscSound.play();}
                         }
                     }
                 } else {
@@ -136,6 +159,12 @@ class gatoAddon {
         addonSetUtils.createCheckbox(addonInfo["id"], "hub", "Show Hub Updates", "Show a notification every time you recieve a reply on the hub", "notifSettings", false, 2);
         addonSetUtils.createCheckbox(addonInfo["id"], "inbox", "Show Gifts + Crafting", "Show a notification every time you recieve a message or gift", "notifSettings", false, 2);
         addonSetUtils.createCheckbox(addonInfo["id"], "misc", "Show Miscellaneous", "Show a notification when it is unclassified", "notifSettings", false, 2);
+
+        addonSetUtils.createCategory("soundSettings", "Sound Settings");
+        addonSetUtils.createCheckbox(addonInfo["id"], "followerSound", "Follower sound", "Play a sound every time you recieve a follower notification", "soundSettings", false, 2);
+        addonSetUtils.createCheckbox(addonInfo["id"], "hubSound", "Hub sound", "Play a sound every time you recieve a hub notification", "soundSettings", false, 2);
+        addonSetUtils.createCheckbox(addonInfo["id"], "inboxSound", "Inbox sound", "Play a sound every time you recieve an inbox notification", "soundSettings", false, 2);
+        addonSetUtils.createCheckbox(addonInfo["id"], "miscSound", "Misc sound", "Play a sound every time you recieve any other notification", "soundSettings", false, 2);
 
         addonSetUtils.hookSaving(addonInfo["id"], __dirname);
     }
