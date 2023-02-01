@@ -1,7 +1,7 @@
 const addonInfo = {
     name: "TwitchUtility",  // Addon Name
     id: "twitchUtility",     // Addon ID (Referenced by save data)
-    version: "1.0.4",        // Version
+    version: "1.0.5",        // Version
     thumbnail: "https://github.com/creepycats/gatoclient-addons/blob/main/thumbnails/twitchutility.png?raw=true",           // Thumbnail URL
     description: "Allows you to integrate your Twitch chat ingame (!link, Chat View)",
     isSocial: false         // UNSUPPORTED - Maybe a future Krunker Hub addon support
@@ -20,14 +20,15 @@ var emoteParser;
 class gatoAddon {
     // Fetch Function - DO NOT REMOVE
     static getInfo(infoName) {
-        return addonInfo[infoName];
-    }
-    // Create your inital configurations here
+            return addonInfo[infoName];
+        }
+        // Create your inital configurations here
     static firstTimeSetup(dependencies) {
-        addonSetUtils = new dependencies[0]();
+        addonSetUtils = new dependencies[0]();        
         // REQUIRED
         addonSetUtils.addConfig(addonInfo["id"], "enabled", true);
         // Add your custom configuration options here
+        addonSetUtils.addConfig(addonInfo["id"], "filteredNames", "");
         addonSetUtils.addConfig(addonInfo["id"], "chatboxEnabled", true);
         addonSetUtils.addConfig(addonInfo["id"], "chatboxOpacity", "1");
         addonSetUtils.addConfig(addonInfo["id"], "chatboxBgOpacity", "0.2");
@@ -133,6 +134,8 @@ class gatoAddon {
             console.log("TwitchUtility Connected!");
 
             var _messageNumber = 0;
+            var names = addonSetUtils.getConfig(addonInfo["id"], "filteredNames");
+            var filteredUsers = names.split(' ');
 
             client.on('message', (channel, tags, message, self) => {
                 if (message.toLowerCase() === '!link' && addonSetUtils.getConfig(addonInfo["id"], "linkCommand") == true) {
@@ -141,37 +144,40 @@ class gatoAddon {
                 }
 
                 if (chatboxEnabled == true) {
-                    var badgePrepend = "";
-                    if (addonSetUtils.getConfig(addonInfo["id"], "badges") == true) {
-                        var ttvBadges = emoteParser.getBadges(tags, channel);
-                        for (const badge in ttvBadges) {
-                            badgePrepend += `<img class="message-emote"src="${ttvBadges[badge]["img"]}"/>`;
+                    if (!filteredUsers.includes(tags.username)) {
+                        var badgePrepend = "";
+                        if (addonSetUtils.getConfig(addonInfo["id"], "badges") == true) {
+                            var ttvBadges = emoteParser.getBadges(tags, channel);
+                            for (const badge in ttvBadges) {
+                                badgePrepend += `<img class="message-emote"src="${ttvBadges[badge]["img"]}"/>`;
+                            }
                         }
-                    }
-                    badgePrepend += " ";
-                    var messageHTML = message;
-                    if(addonSetUtils.getConfig(addonInfo["id"], "emotes") == true){
-                        messageHTML = emoteParser.replaceEmotes(message, tags, channel, self)
-                    }
+                        badgePrepend += " ";
+                        var messageHTML = message;
+                        if (addonSetUtils.getConfig(addonInfo["id"], "emotes") == true) {
+                            messageHTML = emoteParser.replaceEmotes(message, tags, channel, self)
+                        }
 
-                    var _msgElement = document.createElement("div");
-                    _msgElement.setAttribute("data-tab", "-1");
-                    _msgElement.id = "chatMsg_" + _messageNumber;
+                        var _msgElement = document.createElement("div");
+                        _msgElement.setAttribute("data-tab", "-1");
+                        _msgElement.id = "chatMsg_" + _messageNumber;
 
-                    var _msgItem = document.createElement("div");
-                    _msgItem.classList.add("chatItem");
-                    _msgItem.classList.add("twitchMsg");
-                    _msgItem.style = `background-color: rgba(0, 0, 0, ${addonSetUtils.getConfig(addonInfo["id"], "chatboxBgOpacity")})`;
-                    _msgItem.innerHTML = `‎<span style="color:${tags.color}">${badgePrepend}${tags['display-name']}: </span><span class="chatMsg">` + messageHTML + "</span>‎";
-                    _msgElement.appendChild(_msgItem);
+                        var _msgItem = document.createElement("div");
+                        _msgItem.classList.add("chatItem"); 
+                        _msgItem.classList.add("twitchMsg");
+                        _msgItem.style = `background-color: rgba(0, 0, 0, ${addonSetUtils.getConfig(addonInfo["id"], "chatboxBgOpacity")})`;
+                        _msgItem.innerHTML = `‎<span style="color:${tags.color}">${badgePrepend}${tags['display-name']}: </span><span class="chatMsg">` + messageHTML + "</span>‎";
+                        _msgElement.appendChild(_msgItem);
 
-                    let twitchChatList = document.getElementById("twitchChatList");
-                    twitchChatList.appendChild(_msgElement);
-                    twitchChatList.scrollTop = twitchChatList.scrollHeight;
-                    _messageNumber++;
+                                                let twitchChatList = document.getElementById("twitchChatList");
+                                                twitchChatList.appendChild(_msgElement);
+                                                twitchChatList.scrollTop = twitchChatList.scrollHeight;
+                                                _messageNumber++;
 
-                    if (twitchChatList.childNodes.length > 35) {
-                        twitchChatList.childNodes[0].remove();
+                                                            if (twitchChatList.childNodes.length > 35) {
+                                                                twitchChatList.childNodes[0].remove();
+                                                            }
+                    
                     }
                 }
             });
@@ -221,6 +227,7 @@ class gatoAddon {
     static handleTokenUrl(url) {
         const { token } = String(url).match(/token=(?<token>.*)/u)?.groups ?? {};
         if (!token) return new Error('No token');
+
         addonSetUtils.addConfig(addonInfo["id"], "token", token);
 
         this.getUsername(token);
@@ -293,6 +300,7 @@ class gatoAddon {
 
         addonSetUtils.createCategory("addonSettings", "Addon Settings");
         addonSetUtils.createCheckbox(addonInfo["id"], "enabled", "Enable Addon", "Determines if the Addon loads when refreshing page", "addonSettings", false, 2);
+
         function resetToken() {
             addonSetUtils.addConfig(addonInfo["id"], "token", "");
         }
@@ -305,6 +313,8 @@ class gatoAddon {
 
         addonSetUtils.createCategory("chatboxSettings", "Twitch Chatbox Settings");
         addonSetUtils.createCheckbox(addonInfo["id"], "chatboxEnabled", "Enable Chatbox", "Determines if the Addon loads when refreshing page", "chatboxSettings", false, 2);
+        addonSetUtils.createCheckbox(addonInfo["id"], "filterCommands", "Filter commands [WIP]", "Don't show when users execute commands. (WORK IN PROGRESS)", "chatboxSettings", false, 2);
+        addonSetUtils.createTextInput(addonInfo["id"], "filteredNames", "Filter users", "Filter users by putting their name here, separated by spaces.", "Names here", "chatboxSettings", false, 2);
         addonSetUtils.createSlider(addonInfo["id"], "chatboxOpacity", "Chat Opacity", "Changes twitch chat opacity", 0, 1.0, 1.0, 0.1, "chatboxSettings", false);
         addonSetUtils.createSlider(addonInfo["id"], "chatboxBgOpacity", "Chat BG Opac", "Changes message background opacity", 0, 1.0, 0.2, 0.1, "chatboxSettings", false);
         addonSetUtils.createSlider(addonInfo["id"], "chatboxHeight", "Chat Height", "Changes maximum height of chatbox", 0, 5.0, 2.5, 0.1, "chatboxSettings", false);
